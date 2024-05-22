@@ -18,7 +18,7 @@ export default function SignUp() {
       try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
         console.log('Deu bom, ' + response);
-        Alert.alert('Bem vindo!', 'Conta criada com sucesso!');
+        Alert.alert('Bemvindo!', 'Conta criada com sucesso!');
         navigation.navigate('Logado' as never);
       } catch (error) {
         console.error('Deu ruim', error);

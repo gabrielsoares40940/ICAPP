@@ -29,7 +29,7 @@ export default function Tela1() {
         // });
         
         Alert.alert("Sucesso!", "Escala criada com sucesso!");
-
+        
         setNome('');
         setDia('');
         setHora('');
