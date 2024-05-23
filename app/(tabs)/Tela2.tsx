@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, Button } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Button, Alert } from 'react-native';
 import { collection, getDocs, doc, deleteDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
@@ -9,25 +9,35 @@ export default function Tela2() {
   const [agendamentos, setAgendamentos] = useState([]);
   
   useEffect(() => {
-    
-    async function fetchAgendamentos() {
-      try {
-        const querySnapshot = await getDocs(collection(FIRESTORE_DB, "123"));
-        const agendamentosData = querySnapshot.docs.map(doc => doc.data());
-        setAgendamentos(agendamentosData);
-      } catch (error) {
-        console.error("Erro ao buscar escalas: ", error);
-      }
-    }
+    fetchAgendamentos()
+  },[])
 
-    fetchAgendamentos();
-
-    // Função Deletar (não está funcionando por conta do ID do Documento)
-    // https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=pt#web-modular-api_1
-    async function deleteItems(){
-      await deleteDoc(doc(FIRESTORE_DB, "123"))
+  async function fetchAgendamentos() {
+    try {
+      const querySnapshot = await getDocs(collection(FIRESTORE_DB, "123"));
+      const agendamentosData = querySnapshot.docs.map(doc => (
+        {
+          id: doc.id,
+          ...doc.data()
+        }
+      ));
+      setAgendamentos(agendamentosData as never);
+    } catch (error) {
+      console.error("Erro ao buscar escalas: ", error);
     }
-  }, []);
+  }
+
+  async function deleteItems(id: any){
+    console.log('Meu', id)
+    try {
+      await deleteDoc(doc(FIRESTORE_DB, "123", id));
+      Alert.alert("Sucesso", "Agendamento deletado com sucesso!");
+      // Atualizar a lista após a deleção
+      fetchAgendamentos();
+    } catch (error) {
+      console.error("Erro ao buscar agendamentos: ", error);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -40,11 +50,11 @@ export default function Tela2() {
             <Card wrapperStyle={{width:350, height:150}}>
               <Card.Title>Escala</Card.Title>
               <Card.Divider/>
-              <Text style={{fontWeight: "bold", textAlign:"center"}}>Nome: {item.nome}</Text>
+              <Text style={{fontWeight: "bold", textAlign:"center"}}>Nome: {item.nome} {console.log(item)}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Dia: {item.dia}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center", paddingBottom:10}}>Hora: {item.hora}</Text>
               <TouchableOpacity>
-                <Button title={"Deletar"} onPress={() => deleteDoc(doc(FIRESTORE_DB, '123'))}/>
+                <Button title={"Deletar"} onPress={() => deleteItems(item.id)}/>
               </TouchableOpacity>
             </Card>
           </View>
