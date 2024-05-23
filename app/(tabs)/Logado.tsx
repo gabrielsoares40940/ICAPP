@@ -18,16 +18,16 @@ export default function Logado() {
           name="Tela1"
           component={Tela1}
           options={{
-              tabBarIcon:() => <Feather name='plus' color={"#fff"} size={30}/>,
+              tabBarIcon:() => <Feather name='plus' color={"black"} size={30}/>,
               tabBarLabel:'Criar',
-              headerShown: false
+              headerShown: true
           }}
         />
         <Tab.Screen 
           name="Escalas"
           component={Tela2} 
           options={{ 
-            tabBarIcon:() => <Feather name='list' color={"#fff"} size={30}/>,
+            tabBarIcon:() => <Feather name='list' color={"black"} size={30}/>,
             tabBarBadge: "!" ,
             headerShown: false
           }} 
