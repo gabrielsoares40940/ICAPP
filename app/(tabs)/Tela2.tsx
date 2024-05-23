@@ -22,8 +22,10 @@ export default function Tela2() {
 
     fetchAgendamentos();
 
+    // Função Deletar (não está funcionando por conta do ID do Documento)
+    // https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=pt#web-modular-api_1
     async function deleteItems(){
-      await deleteDoc(doc(FIRESTORE_DB, "123", '123'))
+      await deleteDoc(doc(FIRESTORE_DB, "123"))
     }
   }, []);
 

@@ -8,8 +8,7 @@ import { Card } from 'react-native-elements'
 export default function Tela1() {
   const [nome, setNome] = useState('');
   const [dia, setDia] = useState(''); 
-  const [hora, setHora] = useState(''); 
-  
+  const [hora, setHora] = useState('');
     
   async function handleCreateAppointment() {
     if (nome !== '' && dia !== '' && hora !== '') {
@@ -29,7 +28,7 @@ export default function Tela1() {
         // });
         
         Alert.alert("Sucesso!", "Escala criada com sucesso!");
-        
+
         setNome('');
         setDia('');
         setHora('');
@@ -52,12 +51,14 @@ export default function Tela1() {
         onChangeText={text => setNome(text)}
       />
       <TextInput
+        keyboardType={'numeric'}
         style={styles.input}
         placeholder="Dia"
         value={dia}
         onChangeText={text => setDia(text)}
       />
       <TextInput
+        keyboardType="numeric"
         style={styles.input}
         placeholder="Hora"
         value={hora}
