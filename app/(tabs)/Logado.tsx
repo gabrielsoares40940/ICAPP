@@ -19,8 +19,8 @@ export default function Logado() {
           component={Tela1}
           options={{
               tabBarIcon:() => <Feather name='plus' color={"black"} size={30}/>,
-              tabBarLabel:'Criar',
-              headerShown: true
+              tabBarLabel:'Criar Escala',
+              headerShown: false
           }}
         />
         <Tab.Screen 

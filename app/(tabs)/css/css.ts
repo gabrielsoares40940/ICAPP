@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
 
 
 export const styles = StyleSheet.create({
@@ -24,6 +25,7 @@ export const styles = StyleSheet.create({
         fontSize:20,
         marginTop:15,
         color:'#fff',
+        textAlign:'center',
     },
     title:{
         fontSize:20,
@@ -46,6 +48,9 @@ export const styles = StyleSheet.create({
         fontSize:30,
         margin:30,
         color:'#fff',
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop:50,
     },
     input:{
         fontSize:16,
@@ -53,17 +58,21 @@ export const styles = StyleSheet.create({
         borderWidth:1,
         borderColor:'#fff',
         padding:10,
-        width:300,
-        borderRadius:10,
-        backgroundColor: 'white'
+        width:350,
+        borderRadius:20,
+        backgroundColor: '#fff',
     },
     button:{
+        fontSize:16,
         backgroundColor: '#fff' ,
         padding:10,
         margin: 10,
+        marginBottom: 30,
         borderWidth:1,
         borderRadius:20,
-        borderColor:'#fff'
+        borderColor:'#fff',
+        alignItems:'center',
+        width:350,
     },
     buttonDate:{
         backgroundColor: '#fff' ,
@@ -93,7 +102,49 @@ export const styles = StyleSheet.create({
         borderColor:'#fff',
         padding:10,
         width:500,
-        borderRadius:10,
-    }
+        borderRadius:20,
+    },
+    botaoExcluir:{
+        alignItems:'center',
+        backgroundColor:"#ec5353",
+        borderRadius:20,
+        margin:5,
+        padding:10,
+        width:150,
+    },
+    botaoCompareceu:{
+        alignItems:'center',
+        backgroundColor:"#63c2d1",
+        borderRadius:20,
+        margin:5,
+        padding:10,
+        width:150,
+        
+    },
+    TextoExcluir:{
+        color:"#fff",
+        
+    },
+    TextoCompareceu:{
+        color:"#fff",
+    },
+    teste:{
+        borderRadius:20,
+    },
+    botaoLogoff:{
+        fontSize:16,
+        backgroundColor:'#fff',
+        padding:10,
+        margin: 10,
+        marginBottom: 30,
+        borderWidth:1,
+        borderRadius:20,
+        borderColor:'#fff',
+        alignItems:'center',
+        width:100,
+    },
+    bold:{
+        fontWeight:"bold",
+    },
 })
 

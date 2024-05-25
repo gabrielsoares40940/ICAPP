@@ -7,6 +7,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 import { FIREBASE_APP } from '../../firebaseConfig';
 
+import * as Animatable from 'react-native-animatable';
+
 export default function SignUp() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
@@ -37,27 +39,31 @@ export default function SignUp() {
         style={styles.imgMenor}
         source={require('../(tabs)/assets/imaculada.png')}
       />
-      <Text style={styles.titleEmailSenha}>E-mail</Text>
-      <TextInput
-        onChangeText={(text) => setEmail(text)}
-        placeholder='Digite seu e-mail'
-        style={styles.input}
-        value={email}
-      />
-      <Text style={styles.titleEmailSenha}>Senha</Text>
-      <TextInput
-        onChangeText={(text) => setPassword(text)}
-        placeholder='Digite sua senha'
-        style={styles.input}
-        value={password}
-        secureTextEntry
-      />
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={handleSignUp}
-      >
-        <Text>Cadastrar-se</Text>
-      </TouchableOpacity>
+      <Animatable.View delay={1000} animation="fadeInUp">
+        <Text style={styles.titleEmailSenha}>E-mail</Text>
+        <TextInput
+          placeholderTextColor="#808080"
+          onChangeText={(text) => setEmail(text)}
+          placeholder='Digite seu e-mail'
+          style={styles.input}
+          value={email}
+        />
+        <Text style={styles.titleEmailSenha}>Senha</Text>
+        <TextInput
+          placeholderTextColor="#808080"
+          onChangeText={(text) => setPassword(text)}
+          placeholder='Digite sua senha'
+          style={styles.input}
+          value={password}
+          secureTextEntry
+        />
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={handleSignUp}
+        >
+          <Text>Cadastrar-se</Text>
+        </TouchableOpacity>
+      </Animatable.View>
     </View>
   );
 }

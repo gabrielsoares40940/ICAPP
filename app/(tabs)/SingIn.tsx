@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { styles } from './css/css';
 
+import * as Animatable from 'react-native-animatable';
+
 export default function SignIn() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
@@ -34,31 +36,35 @@ export default function SignIn() {
         style={styles.imgMenor}
         source={require('../(tabs)/assets/imaculada.png')}
       />
-      <Text style={styles.titleEmailSenha}>E-mail</Text>
-      <TextInput
-        placeholder='Digite seu e-mail'
-        style={styles.input}
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <Text style={styles.titleEmailSenha}>Senha</Text>
-      <TextInput
-        placeholder='Digite sua senha'
-        style={styles.input}
-        onChangeText={text => setPassword(text)}
-        value={password}
-        secureTextEntry
-      />
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={validateLogin}
-      >
-        <Text>Logar-se</Text>
-      </TouchableOpacity>
+      <Animatable.View delay={1000} animation="fadeInUp">
+          <Text style={styles.titleEmailSenha}>E-mail</Text>
+          <TextInput
+            placeholderTextColor="#808080"
+            placeholder='Digite seu e-mail'
+            style={styles.input}
+            onChangeText={text => setEmail(text)}
+            value={email}
+          />
+          <Text style={styles.titleEmailSenha}>Senha</Text>
+          <TextInput
+            placeholderTextColor="#808080"
+            placeholder='Digite sua senha'
+            style={styles.input}
+            onChangeText={text => setPassword(text)}
+            value={password}
+            secureTextEntry
+          />
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={validateLogin}
+          >
+            <Text>Logar-se</Text>
+          </TouchableOpacity>
 
-        <Text onPress={()=>navigation.navigate('SingUp')} style={styles.texto}>
-          Não possui conta? Clique aqui para cadastrar!
-          </Text>
+            <Text onPress={()=>navigation.navigate('SingUp')} style={styles.texto}>
+              Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>
+            </Text>
+          </Animatable.View>
     </View>
   );
 }

@@ -1,11 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, Button, Alert } from 'react-native';
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, FlatList, TouchableOpacity, Button, Alert , RefreshControl} from 'react-native';
 import { collection, getDocs, doc, deleteDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 import { Card } from 'react-native-elements'
 
+import * as Animatable from 'react-native-animatable';
+
+//Atualização da lista
+
+const wait = timeout =>{
+  return new Promise(resolver=>setTimeout(resolver,timeout * 1000));
+};
+
 export default function Tela2() {
+
+  //Atualização da lista
+
+  const[refreshing,setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await wait(2);
+    setRefreshing(false);
+  },[]);
+  
+
   const [agendamentos, setAgendamentos] = useState([]);
   
   useEffect(() => {
@@ -39,25 +59,39 @@ export default function Tela2() {
     }
   }
 
+// Ajeitar o botao compareceu, adionando uma coluna no fire base de comparecimento!
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleAgendamento}>Escalas</Text>
       <FlatList
+      
+          refreshControl={
+            <RefreshControl
+            refreshing={refreshing} 
+            onRefresh={onRefresh}
+            />}
+
+
         data={agendamentos}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View>
-            <Card wrapperStyle={{width:350, height:150}}>
+          <Animatable.View delay={50} animation="fadeInUp">
+            <Card wrapperStyle={{width:350, height:200}}>
               <Card.Title>Escala</Card.Title>
-              <Card.Divider/>
+              <Card.Divider>
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Nome: {item.nome} {console.log(item)}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Dia: {item.dia}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center", paddingBottom:10}}>Hora: {item.hora}</Text>
-              <TouchableOpacity>
-                <Button title={"Deletar"} onPress={() => deleteItems(item.id)}/>
+              <TouchableOpacity style={styles.botaoExcluir} onPress={() => deleteItems(item.id)}>
+                <Text style={styles.TextoExcluir}>Excluir</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.botaoCompareceu} onPress={() => deleteItems(item.id)}> 
+              <Text style={styles.TextoCompareceu} >Compareceu</Text>
+              </TouchableOpacity>
+              </Card.Divider>
             </Card>
-          </View>
+          </Animatable.View>
         )}
       />
     </View>

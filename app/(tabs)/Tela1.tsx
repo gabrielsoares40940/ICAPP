@@ -3,9 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } fro
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
-import { Card } from 'react-native-elements'
 
-export default function Tela1() {
+import * as Animatable from 'react-native-animatable';
+
+export default function Tela1({navigation}) {
   const [nome, setNome] = useState('');
   const [dia, setDia] = useState(''); 
   const [hora, setHora] = useState('');
@@ -44,29 +45,45 @@ export default function Tela1() {
   return (
     <View style={styles.container}>
       <Text style={styles.titleAgendamento}>Criar Escala</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        value={nome}
-        onChangeText={text => setNome(text)}
-      />
-      <TextInput
-        keyboardType={'numeric'}
-        style={styles.input}
-        placeholder="Dia"
-        value={dia}
-        onChangeText={text => setDia(text)}
-      />
-      <TextInput
-        keyboardType="numeric"
-        style={styles.input}
-        placeholder="Hora"
-        value={hora}
-        onChangeText={text => setHora(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleCreateAppointment}>
-        <Text >Salvar Escala</Text>
-      </TouchableOpacity>
+        <Animatable.View delay={50} animation="fadeInUp">
+        <Animatable.View delay={100} animation="fadeInUp">
+          <TextInput
+            placeholderTextColor="#808080"
+            style={styles.input}
+            placeholder="Nome"
+            value={nome}
+            onChangeText={text => setNome(text)}
+          />
+        </Animatable.View>
+        <Animatable.View delay={150} animation="fadeInUp">
+          <TextInput
+            placeholderTextColor="#808080"      
+            keyboardType={'numeric'}
+            style={styles.input}
+            placeholder="Dia"
+            value={dia}
+            onChangeText={text => setDia(text)}
+          />
+        </Animatable.View>
+        <Animatable.View delay={200} animation="fadeInUp">
+          <TextInput
+            placeholderTextColor="#808080"
+            keyboardType="numeric"
+            style={styles.input}
+            placeholder="Hora"
+            value={hora}
+            onChangeText={text => setHora(text)}
+          />
+          </Animatable.View>
+        <Animatable.View delay={250} animation="fadeInUp">
+          <TouchableOpacity style={styles.button} onPress={handleCreateAppointment}>
+            <Text >Salvar Escala</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.botaoLogoff} onPress={()=> navigation.navigate("SingIn")}>
+            <Text>Logoff</Text>
+          </TouchableOpacity>
+        </Animatable.View>
+      </Animatable.View>
     </View>
   );
 }
