@@ -6,9 +6,6 @@ import { styles } from './css/css';
 
 import * as Animatable from 'react-native-animatable';
 
-import DatePicker from 'react-native-date-picker'
-
-
 export default function Tela1({navigation}) {
   const [nome, setNome] = useState('');
   const [dia, setDia] = useState(''); 

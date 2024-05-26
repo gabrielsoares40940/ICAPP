@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity, Button, Alert , RefreshControl} from 'react-native';
 import { collection, getDocs, doc, deleteDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
@@ -7,24 +7,7 @@ import { Card } from 'react-native-elements'
 
 import * as Animatable from 'react-native-animatable';
 
-//Atualização da lista
-
-const wait = timeout =>{
-  return new Promise(resolver=>setTimeout(resolver,timeout * 1000));
-};
-
 export default function Tela2() {
-
-  //Atualização da lista
-
-  const[refreshing,setRefreshing] = useState(false);
-
-  const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await wait(2);
-    setRefreshing(false);
-  },[]);
-  
 
   const [agendamentos, setAgendamentos] = useState([]);
   
@@ -65,18 +48,11 @@ export default function Tela2() {
     <View style={styles.container}>
       <Text style={styles.titleAgendamento}>Escalas</Text>
       <FlatList
-          refreshControl={
-            <RefreshControl
-            refreshing={refreshing} 
-            onRefresh={onRefresh}
-            />}
-
-
         data={agendamentos}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <Animatable.View delay={50} animation="fadeInUp">
-            <Card wrapperStyle={{width:350, height:200}}>
+            <Card containerStyle={{width:350, height:200, borderRadius:20}}>
               <Card.Title>Escala</Card.Title>
               <Card.Divider>
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Nome: {item.nome} {console.log(item)}</Text>
@@ -87,7 +63,7 @@ export default function Tela2() {
                   <Text style={styles.TextoExcluir}>Não compareceu</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.botaoCompareceu} onPress={() => deleteItems(item.id)}> 
-                <Text style={styles.TextoCompareceu} >Compareceu</Text>
+                <Text style={styles.TextoCompareceu}>Compareceu</Text>
                 </TouchableOpacity>
               </View>
               </Card.Divider>
