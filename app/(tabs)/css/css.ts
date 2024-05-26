@@ -176,5 +176,13 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         margin: 10,
     },
+    PuxeAtualizar:{
+        color:'#fff',
+        marginBottom:10,
+        fontWeight:"bold",
+    },
+    Data:{
+        width:250,
+    },
 })
 

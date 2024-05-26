@@ -47,7 +47,12 @@ export default function Tela2() {
   return (
     <View style={styles.container}>
       <Text style={styles.titleAgendamento}>Escalas</Text>
+      <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
       <FlatList
+      refreshControl={<RefreshControl
+        refreshing={false}
+        onRefresh={() => fetchAgendamentos()}
+      />}
         data={agendamentos}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (

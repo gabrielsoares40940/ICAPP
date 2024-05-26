@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert , Button} from 'react-native';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
@@ -7,6 +7,7 @@ import { styles } from './css/css';
 import * as Animatable from 'react-native-animatable';
 
 export default function Tela1({navigation}) {
+ 
   const [nome, setNome] = useState('');
   const [dia, setDia] = useState(''); 
   const [hora, setHora] = useState('');
@@ -42,6 +43,8 @@ export default function Tela1({navigation}) {
     }
   }
 
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleAgendamento}>Criar Escala</Text>
@@ -56,7 +59,7 @@ export default function Tela1({navigation}) {
           />
         </Animatable.View>
         <Animatable.View delay={150} animation="fadeInUp">
-          <TextInput
+        <TextInput
             placeholderTextColor="#808080"      
             keyboardType={'numeric'}
             style={styles.input}
