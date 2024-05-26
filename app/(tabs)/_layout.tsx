@@ -1,10 +1,8 @@
 
 //ARQUIVO DE ROTAS
 
-import { Stack , Tabs} from 'expo-router';
+import { Stack} from 'expo-router';
 import React from 'react';
-
-
 
 export default function TabLayout() {
   return (
@@ -13,9 +11,6 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
       }}>
-        <Stack.Screen
-        name="index"
-        />
       <Stack.Screen
         name="SingIn"
         />

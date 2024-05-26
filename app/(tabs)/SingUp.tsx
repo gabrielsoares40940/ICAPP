@@ -7,6 +7,9 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 import { FIREBASE_APP } from '../../firebaseConfig';
 
+import {Ionicons} from '@expo/vector-icons';
+
+
 import * as Animatable from 'react-native-animatable';
 
 export default function SignUp() {
@@ -31,6 +34,8 @@ export default function SignUp() {
     }
   }
 
+  const[hidePass, setHidePassa] = useState(true);
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleApp}>ICAPP</Text>
@@ -39,24 +44,35 @@ export default function SignUp() {
         style={styles.imgMenor}
         source={require('../(tabs)/assets/imaculada.png')}
       />
-      <Animatable.View delay={1000} animation="fadeInUp">
+      <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
         <Text style={styles.titleEmailSenha}>E-mail</Text>
-        <TextInput
-          placeholderTextColor="#808080"
-          onChangeText={(text) => setEmail(text)}
-          placeholder='Digite seu e-mail'
-          style={styles.input}
-          value={email}
-        />
+        <View>
+          <TextInput
+            placeholderTextColor="#808080"
+            onChangeText={(text) => setEmail(text)}
+            placeholder='Digite seu e-mail'
+            style={styles.inputArea}
+            value={email}
+          />
+        </View>
         <Text style={styles.titleEmailSenha}>Senha</Text>
-        <TextInput
-          placeholderTextColor="#808080"
-          onChangeText={(text) => setPassword(text)}
-          placeholder='Digite sua senha'
-          style={styles.input}
-          value={password}
-          secureTextEntry
-        />
+        <View style={styles.inputArea}>
+          <TextInput
+            placeholderTextColor="#808080"
+            onChangeText={(text) => setPassword(text)}
+            placeholder='Digite sua senha'
+            style={styles.input2}
+            value={password}
+            secureTextEntry={hidePass}
+          />
+          <TouchableOpacity style={styles.icon} onPress={()=> setHidePassa(!hidePass)}>
+              {hidePass ?
+              <Ionicons name="eye-off" color="#808080" size={22} />
+              :
+              <Ionicons name="eye" color="#808080" size={22} />
+              }
+            </TouchableOpacity>
+          </View>
         <TouchableOpacity 
           style={styles.button}
           onPress={handleSignUp}

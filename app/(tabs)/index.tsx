@@ -2,7 +2,8 @@
 import React,{ useEffect } from 'react';
 import {View, Image, ActivityIndicator, Text, TouchableOpacity} from 'react-native';
 import {styles} from './css/css';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {useNavigation } from '@react-navigation/native';
+
 
 //import UserContextProvider from '../contexts/UserContext';
 
@@ -16,8 +17,8 @@ export default function Home() {
   useEffect(()=>{
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
-      if(token !== null ){
-
+      if(token){
+        
         //validar token
 
       } else {

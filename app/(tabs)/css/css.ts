@@ -10,6 +10,10 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
+    container2:{
+        justifyContent:'center',
+        alignItems:'center',
+    },
     texto:{
         color:'#fff',
     },
@@ -30,7 +34,7 @@ export const styles = StyleSheet.create({
     title:{
         fontSize:20,
         margin:15,
-        alignItems:'center'
+        alignItems:'center',
     },
     titleApp: {
         fontSize:40,
@@ -58,7 +62,7 @@ export const styles = StyleSheet.create({
         borderWidth:1,
         borderColor:'#fff',
         padding:10,
-        width:350,
+        width:300,
         borderRadius:20,
         backgroundColor: '#fff',
     },
@@ -72,7 +76,27 @@ export const styles = StyleSheet.create({
         borderRadius:20,
         borderColor:'#fff',
         alignItems:'center',
-        width:350,
+        width:150,
+    },
+    inputArea:{
+        flexDirection:'row',
+        fontSize:16,
+        margin:10,
+        padding:10,
+        width:300,
+        borderRadius:20,
+        backgroundColor:'#fff',
+    },
+    input2:{
+        fontSize:16,
+        width:'85%',
+        
+        
+    },
+    icon:{
+        width:'15%',
+        justifyContent:'center',
+        alignItems:'center',
     },
     buttonDate:{
         backgroundColor: '#fff' ,
