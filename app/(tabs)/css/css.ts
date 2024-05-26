@@ -134,7 +134,7 @@ export const styles = StyleSheet.create({
         borderRadius:20,
         margin:5,
         padding:10,
-        width:150,
+        width:'50%',
     },
     botaoCompareceu:{
         alignItems:'center',
@@ -142,7 +142,7 @@ export const styles = StyleSheet.create({
         borderRadius:20,
         margin:5,
         padding:10,
-        width:150,
+        width:'50%',
         
     },
     TextoExcluir:{
@@ -169,6 +169,12 @@ export const styles = StyleSheet.create({
     },
     bold:{
         fontWeight:"bold",
+    },
+    AreaCompareceu:{
+        flexDirection:'row',
+        justifyContent:"center",
+        alignItems:'center',
+        margin: 10,
     },
 })
 

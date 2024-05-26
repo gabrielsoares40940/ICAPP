@@ -65,7 +65,6 @@ export default function Tela2() {
     <View style={styles.container}>
       <Text style={styles.titleAgendamento}>Escalas</Text>
       <FlatList
-      
           refreshControl={
             <RefreshControl
             refreshing={refreshing} 
@@ -83,12 +82,14 @@ export default function Tela2() {
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Nome: {item.nome} {console.log(item)}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Dia: {item.dia}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center", paddingBottom:10}}>Hora: {item.hora}</Text>
-              <TouchableOpacity style={styles.botaoExcluir} onPress={() => deleteItems(item.id)}>
-                <Text style={styles.TextoExcluir}>Excluir</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.botaoCompareceu} onPress={() => deleteItems(item.id)}> 
-              <Text style={styles.TextoCompareceu} >Compareceu</Text>
-              </TouchableOpacity>
+              <View style={styles.AreaCompareceu}>
+                <TouchableOpacity style={styles.botaoExcluir} onPress={() => deleteItems(item.id)}>
+                  <Text style={styles.TextoExcluir}>Não compareceu</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.botaoCompareceu} onPress={() => deleteItems(item.id)}> 
+                <Text style={styles.TextoCompareceu} >Compareceu</Text>
+                </TouchableOpacity>
+              </View>
               </Card.Divider>
             </Card>
           </Animatable.View>

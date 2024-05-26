@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 
 import * as Animatable from 'react-native-animatable';
+
+import DatePicker from 'react-native-date-picker'
+
 
 export default function Tela1({navigation}) {
   const [nome, setNome] = useState('');
@@ -75,14 +78,14 @@ export default function Tela1({navigation}) {
             onChangeText={text => setHora(text)}
           />
           </Animatable.View>
-        <Animatable.View delay={250} animation="fadeInUp">
+          <Animatable.View delay={250} animation="fadeInUp" style={styles.container2}>
           <TouchableOpacity style={styles.button} onPress={handleCreateAppointment}>
             <Text >Salvar Escala</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoLogoff} onPress={()=> navigation.navigate("SingIn")}>
+          </TouchableOpacity>  
+        </Animatable.View>
+        <TouchableOpacity style={styles.botaoLogoff} onPress={()=> navigation.navigate("SingIn")}>
             <Text>Logoff</Text>
           </TouchableOpacity>
-        </Animatable.View>
       </Animatable.View>
     </View>
   );
