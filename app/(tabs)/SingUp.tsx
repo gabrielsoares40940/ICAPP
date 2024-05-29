@@ -44,19 +44,24 @@ export default function SignUp() {
         style={styles.imgMenor}
         source={require('../(tabs)/assets/imaculada.png')}
       />
+
       <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
         <Text style={styles.titleEmailSenha}>E-mail</Text>
-        <View>
+        <View style={styles.inputArea}>
+          <Ionicons name="mail" color="#808080" size={22} style={{paddingRight:3}}/>
           <TextInput
             placeholderTextColor="#808080"
             onChangeText={(text) => setEmail(text)}
             placeholder='Digite seu e-mail'
-            style={styles.inputArea}
+            style={styles.input2}
             value={email}
           />
         </View>
+
         <Text style={styles.titleEmailSenha}>Senha</Text>
         <View style={styles.inputArea}>
+        <Ionicons name="lock-closed" color="#808080" size={22} style={{paddingRight:3}}/>
+
           <TextInput
             placeholderTextColor="#808080"
             onChangeText={(text) => setPassword(text)}
@@ -73,10 +78,10 @@ export default function SignUp() {
               }
             </TouchableOpacity>
           </View>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={handleSignUp}
-        >
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={handleSignUp}
+          >
           <Text>Cadastrar-se</Text>
         </TouchableOpacity>
       </Animatable.View>
