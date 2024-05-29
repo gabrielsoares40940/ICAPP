@@ -90,11 +90,9 @@ export const styles = StyleSheet.create({
     input2:{
         fontSize:16,
         width:'85%',
-        
-        
     },
     icon:{
-        width:'15%',
+        width:'8%',
         justifyContent:'center',
         alignItems:'center',
     },
@@ -115,6 +113,16 @@ export const styles = StyleSheet.create({
         borderRadius:20,
         borderColor:'#fff',
         left: 83,
+    },
+    inputSelect: {
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderWidth: 0.5,
+        borderColor: 'purple',
+        borderRadius: 8,
+        color: 'black',
+        paddingRight: 30 // to ensure the text is never behind the icon
     },
     //ESTILIZAÇÃO DAS PAGINAS POS LOGADO
 
@@ -165,8 +173,7 @@ export const styles = StyleSheet.create({
         borderRadius:20,
         borderColor:'#fff',
         alignItems:'center',
-        width:100,
-    },
+        width:100    },
     bold:{
         fontWeight:"bold",
     },
