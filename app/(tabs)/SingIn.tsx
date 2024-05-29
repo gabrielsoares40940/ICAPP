@@ -40,49 +40,47 @@ export default function SignIn() {
         style={styles.imgMenor}
         source={require('../(tabs)/assets/imaculada.png')}
       />
-      <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2} >
-          <Text style={styles.titleEmailSenha}>E-mail</Text>
-          <View>
-            <TextInput
-              placeholderTextColor="#808080"
-              placeholder='Digite seu e-mail'
-              style={styles.inputArea}
-              onChangeText={text => setEmail(text)}
-              value={email}
-            />
-            </View>
-          
-            <Text style={styles.titleEmailSenha}>Senha</Text>
-
-          <View style={styles.inputArea}>
-            <TextInput
-              placeholderTextColor="#808080"
-              placeholder='Digite sua senha'
-              style={styles.input2}
-              onChangeText={text => setPassword(text)}
-              value={password}
-              secureTextEntry={hidePass}
-            />
-            <TouchableOpacity style={styles.icon} onPress={()=> setHidePassa(!hidePass)}>
-              {hidePass ?
-              <Ionicons name="eye-off" color="#808080" size={22} />
-              :
-              <Ionicons name="eye" color="#808080" size={22} />
-              }
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={validateLogin}
-          >
-            
-            <Text>Logar-se</Text>
+      <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
+        <Text style={styles.titleEmailSenha}>E-mail</Text>
+        <View style={styles.inputArea}>
+        <Ionicons name="mail" color="#808080" size={22} style={{paddingRight:3}}/>
+        <TextInput
+          placeholderTextColor="#808080"
+          placeholder='Digite seu e-mail'
+          style={styles.input2}
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+        </View>
+        <Text style={styles.titleEmailSenha}>Senha</Text>
+        <View style={styles.inputArea}>
+          <Ionicons name="lock-closed" color="#808080" size={22} style={{paddingRight:3}}/>
+          <TextInput
+            placeholderTextColor="#808080"
+            placeholder='Digite sua senha'
+            style={styles.input2}
+            onChangeText={text => setPassword(text)}
+            value={password}
+            secureTextEntry={hidePass}
+          />
+          <TouchableOpacity style={styles.icon} onPress={()=> setHidePassa(!hidePass)}>
+            {hidePass ?
+            <Ionicons name="eye-off" color="#808080" size={22} />
+            :
+            <Ionicons name="eye" color="#808080" size={22} />
+            }
           </TouchableOpacity>
-
-            <Text onPress={()=>navigation.navigate('SingUp' as never)} style={styles.texto}>
-              Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>
-            </Text>
-          </Animatable.View>
+        </View>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={validateLogin}
+        >
+        <Text>Logar-se</Text>
+        </TouchableOpacity>
+        <Text onPress={()=>navigation.navigate('SingUp' as never)} style={styles.texto}>
+          Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>
+        </Text>
+      </Animatable.View>
     </View>
   );
 }
