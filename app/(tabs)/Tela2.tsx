@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity, Button, Alert , RefreshControl} from 'react-native';
-import { collection, getDocs, doc, deleteDoc } from '@firebase/firestore';
+import { collection, getDocs,deleteDoc,doc, updateDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 import { Card } from 'react-native-elements'
@@ -10,7 +10,7 @@ import * as Animatable from 'react-native-animatable';
 export default function Tela2() {
 
   const [agendamentos, setAgendamentos] = useState([]);
-  
+    
   useEffect(() => {
     fetchAgendamentos()
   },[])
@@ -51,18 +51,28 @@ export default function Tela2() {
   }
 
   //Função de Deletar itens
-  async function deleteItems(id: any){
-    console.log('Meu', id)
+  // async function deleteItems(id: any){
+  //   console.log('Meu', id)
+  //   try {
+  //     await deleteDoc(doc(FIRESTORE_DB, "123", id));
+  //     Alert.alert("Sucesso", "Agendamento deletado com sucesso!");
+  //     // Atualizar a lista após a deleção
+  //     fetchAgendamentos(); // aqui chama uma função de atualizar sem alerta!
+  //   } catch (error) {
+  //     console.error("Erro ao buscar agendamentos: ", error);
+  //   }
+  // }
+  async function presenteAusente(id:any, situation:any){
     try {
-      await deleteDoc(doc(FIRESTORE_DB, "123", id));
-      Alert.alert("Sucesso", "Agendamento deletado com sucesso!");
-      // Atualizar a lista após a deleção
-      fetchAgendamentos(); // aqui chama uma função de atualizar sem alerta!
+      await updateDoc(doc(FIRESTORE_DB, "123", id), {
+        compareceu: situation // Novo campo para indicar se a pessoa compareceu
+      });
+      Alert.alert("Sucesso", "Status de comparecimento atualizado!");
+      fetchAgendamentos(); // Atualizar a lista após a atualização do documento
     } catch (error) {
-      console.error("Erro ao buscar agendamentos: ", error);
+      console.error("Erro ao atualizar o status de comparecimento: ", error);
     }
   }
-
 // Ajeitar o botao compareceu, adionando uma coluna no fire base de comparecimento!
 
   return (
@@ -74,7 +84,7 @@ export default function Tela2() {
         refreshing={false}
         onRefresh={() => fetchAgendamentosAlert()}
       />}
-        data={agendamentos}
+        data={agendamentos.filter(item => !item.hasOwnProperty('compareceu'))}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <Animatable.View delay={50} animation="fadeInUp">
@@ -85,10 +95,10 @@ export default function Tela2() {
               <Text style={{fontWeight: "bold", textAlign:"center"}}>Dia: {item.dia}</Text>
               <Text style={{fontWeight: "bold", textAlign:"center", paddingBottom:10}}>Hora: {item.hora}</Text>
               <View style={styles.AreaCompareceu}>
-                <TouchableOpacity style={styles.botaoExcluir} onPress={() => deleteItems(item.id)}>
+                <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(item.id, "ausente")}>
                   <Text style={styles.TextoExcluir}>Não compareceu</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botaoCompareceu} onPress={() => deleteItems(item.id)}> 
+                <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(item.id, "presente")}> 
                 <Text style={styles.TextoCompareceu}>Compareceu</Text>
                 </TouchableOpacity>
               </View>

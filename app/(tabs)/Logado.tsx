@@ -2,10 +2,10 @@
 
 import React from 'react';
 import {Feather} from '@expo/vector-icons';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Tela1 from './Tela1';
 import Tela2 from './Tela2';
+import Historico from './Historico';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +32,15 @@ export default function Logado() {
             headerShown: false
           }} 
           
+        />
+
+        <Tab.Screen
+          name='Histórico'
+          component={Historico}
+          options={{
+            tabBarIcon: () => <Feather name='book-open' color={"black"} size={30} />,
+            headerShown: false
+          }}  
         />
       </Tab.Navigator>
   );
