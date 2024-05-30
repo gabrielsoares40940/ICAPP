@@ -43,7 +43,7 @@ export default function SignIn() {
       <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
         <Text style={styles.titleEmailSenha}>E-mail</Text>
         <View style={styles.inputArea}>
-        <Ionicons name="mail" color="#808080" size={22} style={{paddingRight:3}}/>
+        <Ionicons name="mail" color="#808080" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
         <TextInput
           placeholderTextColor="#808080"
           placeholder='Digite seu e-mail'
@@ -54,7 +54,7 @@ export default function SignIn() {
         </View>
         <Text style={styles.titleEmailSenha}>Senha</Text>
         <View style={styles.inputArea}>
-          <Ionicons name="lock-closed" color="#808080" size={22} style={{paddingRight:3}}/>
+          <Ionicons name="lock-closed" color="#808080" size={22} style={styles.iconLock}/>
           <TextInput
             placeholderTextColor="#808080"
             placeholder='Digite sua senha'

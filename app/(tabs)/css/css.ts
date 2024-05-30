@@ -89,12 +89,19 @@ export const styles = StyleSheet.create({
     },
     input2:{
         fontSize:16,
-        width:'85%',
+        width:'80%',
     },
     icon:{
-        width:'8%',
+        width:'10%',
         justifyContent:'center',
         alignItems:'center',
+    },
+    iconLock:{
+        paddingTop:1,
+        justifyContent:'center',
+        alignItems:'center',
+        width:'10%',
+
     },
     buttonDate:{
         backgroundColor: '#fff' ,

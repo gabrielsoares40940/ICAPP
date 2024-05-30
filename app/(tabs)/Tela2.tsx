@@ -15,8 +15,10 @@ export default function Tela2() {
     fetchAgendamentos()
   },[])
 
+
+  //Função de Atualizar sem alerta!
   async function fetchAgendamentos() {
-    try {
+    try { 
       const querySnapshot = await getDocs(collection(FIRESTORE_DB, "123"));
       const agendamentosData = querySnapshot.docs.map(doc => (
         {
@@ -29,14 +31,33 @@ export default function Tela2() {
       console.error("Erro ao buscar escalas: ", error);
     }
   }
+  
+  //Função criada igualmente de atulização mas com alert!!!
+  async function fetchAgendamentosAlert() {
+    try { 
+      const querySnapshot = await getDocs(collection(FIRESTORE_DB, "123"));
+      const agendamentosData = querySnapshot.docs.map(doc => (
+        {
+          id: doc.id,
+          ...doc.data()
+        }
+      ));
+      setAgendamentos(agendamentosData as never);
+      Alert.alert("Sucesso", "Lista atualizada!");
+      // Atualizar a lista após a deleção
+    } catch (error) {
+      console.error("Erro ao buscar escalas: ", error);
+    }
+  }
 
+  //Função de Deletar itens
   async function deleteItems(id: any){
     console.log('Meu', id)
     try {
       await deleteDoc(doc(FIRESTORE_DB, "123", id));
       Alert.alert("Sucesso", "Agendamento deletado com sucesso!");
       // Atualizar a lista após a deleção
-      fetchAgendamentos();
+      fetchAgendamentos(); // aqui chama uma função de atualizar sem alerta!
     } catch (error) {
       console.error("Erro ao buscar agendamentos: ", error);
     }
@@ -51,7 +72,7 @@ export default function Tela2() {
       <FlatList
       refreshControl={<RefreshControl
         refreshing={false}
-        onRefresh={() => fetchAgendamentos()}
+        onRefresh={() => fetchAgendamentosAlert()}
       />}
         data={agendamentos}
         keyExtractor={(item, index) => index.toString()}
