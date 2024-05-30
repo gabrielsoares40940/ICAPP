@@ -198,5 +198,17 @@ export const styles = StyleSheet.create({
     Data:{
         width:250,
     },
+    datePicker:{
+        height:120,
+        marginTop:-10,
+    },
+    pickerButton:{
+        paddingHorizontal:20,
+    },
+    buttonText:{
+        fontSize:14,
+        fontWeight:"500",
+        color:"#fff",
+    },
 })
 

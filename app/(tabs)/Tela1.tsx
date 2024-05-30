@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert , Button, Platform} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert , Button, Platform, Pressable} from 'react-native';
 import {addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 
 import * as Animatable from 'react-native-animatable';
 
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+
+
+import DateTimePicker, { EvtTypes } from '@react-native-community/datetimepicker'
+
 
 export default function Tela1({navigation}) {
 
@@ -47,22 +50,34 @@ export default function Tela1({navigation}) {
     }
   }
 
-  const [dataAtual] = useState(new Date()); // criado para barrar as datas anteriores
+  const [dataAtual] = useState(new Date()); //Criado para barrar as datas anteriores
 
-  const [data,setData] = useState(new Date());
-  const [show, setShow] = useState(false);
+  const [date,setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
 
-  const handleChange = (event: DateTimePickerEvent, data?: Date)=>{
-    console.log(event,data);
-    if(data) setData(data);
-    
-
-    setShow(false);
+  const toggleDatePicker = () =>{
+    setShowPicker(!showPicker)
   };
 
-  const handleShow = () =>{
-    setShow(true);
+  const onChange = ({ type }, selectedDate) => {
+    if (!(selectedDate instanceof Date) || isNaN(selectedDate.getTime())) {
+      throw new Error("selectedDate deve ser uma instância válida de Date");
+    }
+  
+    if (type === "set") {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+      if (Platform.OS === 'android') {
+        toggleDatePicker();
+        setDia(currentDate.toLocaleDateString());
+      }
+    } else {
+      toggleDatePicker();
+    }
   };
+  
+
+  
 
 
 
@@ -79,35 +94,58 @@ export default function Tela1({navigation}) {
             onChangeText={text => setNome(text)}
           />
         </Animatable.View>
+
         <Animatable.View delay={150} animation="fadeInUp">
-
-
-         <Button onPress={handleShow} title="Escolha sua data"/>
-          {show && 
-            
+          {showPicker && (
           <DateTimePicker 
-          testID="dateTimePicker"
-          value={data}
+          value={date}
           mode={'date'}
           is24Hour={true}
-          display='default'
+          display='spinner'
           minimumDate={dataAtual}
-          onChange={handleChange}
-          locale="pt-Br"
-          
-          
+          onChange={onChange}
+          locale="pt-BR"
+          timeZoneName=""
+          style={styles.datePicker}
           />   
-          } 
-          <Text> {data.toLocaleDateString()}</Text>
+          )} 
 
-           <TextInput
-            placeholderTextColor="#808080"      
-            style={styles.input}
-            placeholder="Dia"
-            value={dia}
-            onChangeText={text => setDia(text)}
-            editable={false}
-            />
+          {showPicker && Platform.OS==="ios" &&(
+          <View
+            style={{flexDirection:"row", justifyContent:"space-around" }}>
+              <TouchableOpacity 
+              style={[styles.pickerButton,{backgroundColor:"#808080"}]}
+              onPress={toggleDatePicker}
+              >
+                  <Text
+                  style={[styles.buttonText,{color:"#075985"}]}
+                  >Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+              style={[styles.pickerButton,]}
+              onPress={toggleDatePicker}
+                >
+                  <Text
+                  style={[styles.buttonText,{color:"#075985"}]}
+                  >Confirmar</Text>
+              </TouchableOpacity>
+          </View>
+        )}
+
+          {!showPicker && (
+            <Pressable onPress={toggleDatePicker}>
+                  
+              <TextInput
+                placeholderTextColor="#808080"      
+                style={styles.input}
+                placeholder="Dia"
+                value={dia}
+                onChangeText={setDia}
+                editable={false}
+                onPressIn={toggleDatePicker}
+                />
+            </Pressable>
+          )}
 
           
 
