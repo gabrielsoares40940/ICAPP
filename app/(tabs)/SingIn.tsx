@@ -1,4 +1,4 @@
-import { View, Image, TextInput, TouchableOpacity, Alert, Text} from 'react-native';
+import { View, Image, TextInput, TouchableOpacity, Alert, Text, KeyboardAvoidingView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_APP } from '@/firebaseConfig';
 import React, { useState } from 'react';
@@ -41,45 +41,47 @@ export default function SignIn() {
         source={require('../(tabs)/assets/imaculada.png')}
       />
       <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
-        <Text style={styles.titleEmailSenha}>E-mail</Text>
-        <View style={styles.inputArea}>
-        <Ionicons name="mail" color="#808080" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
-        <TextInput
-          placeholderTextColor="#808080"
-          placeholder='Digite seu e-mail'
-          style={styles.input2}
-          onChangeText={text => setEmail(text)}
-          value={email}
-        />
-        </View>
-        <Text style={styles.titleEmailSenha}>Senha</Text>
-        <View style={styles.inputArea}>
-          <Ionicons name="lock-closed" color="#808080" size={22} style={styles.iconLock}/>
+        <KeyboardAvoidingView behavior='position' enabled>
+          <Text style={styles.titleEmailSenha}>E-mail</Text>
+          <View style={styles.inputArea}>
+          <Ionicons name="mail" color="#808080" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
           <TextInput
             placeholderTextColor="#808080"
-            placeholder='Digite sua senha'
+            placeholder='Digite seu e-mail'
             style={styles.input2}
-            onChangeText={text => setPassword(text)}
-            value={password}
-            secureTextEntry={hidePass}
+            onChangeText={text => setEmail(text)}
+            value={email}
           />
-          <TouchableOpacity style={styles.icon} onPress={()=> setHidePassa(!hidePass)}>
-            {hidePass ?
-            <Ionicons name="eye-off" color="#808080" size={22} />
-            :
-            <Ionicons name="eye" color="#808080" size={22} />
-            }
+          </View>
+          <Text style={styles.titleEmailSenha}>Senha</Text>
+          <View style={styles.inputArea}>
+            <Ionicons name="lock-closed" color="#808080" size={22} style={styles.iconLock}/>
+            <TextInput
+              placeholderTextColor="#808080"
+              placeholder='Digite sua senha'
+              style={styles.input2}
+              onChangeText={text => setPassword(text)}
+              value={password}
+              secureTextEntry={hidePass}
+            />
+            <TouchableOpacity style={styles.icon} onPress={()=> setHidePassa(!hidePass)}>
+              {hidePass ?
+              <Ionicons name="eye-off" color="#808080" size={22} />
+              :
+              <Ionicons name="eye" color="#808080" size={22} />
+              }
+            </TouchableOpacity>
+          </View>
+          </KeyboardAvoidingView>
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={validateLogin}
+          >
+          <Text>Logar-se</Text>
           </TouchableOpacity>
-        </View>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={validateLogin}
-        >
-        <Text>Logar-se</Text>
-        </TouchableOpacity>
-        <Text onPress={()=>navigation.navigate('SingUp' as never)} style={styles.texto}>
-          Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>
-        </Text>
+          <Text onPress={()=>navigation.navigate('SingUp' as never)} style={styles.texto}>
+            Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>
+          </Text>
       </Animatable.View>
     </View>
   );

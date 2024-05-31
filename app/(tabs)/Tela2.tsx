@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, Button, Alert , RefreshControl} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Button, Alert , RefreshControl, TextInput} from 'react-native';
 import { collection, getDocs,doc, updateDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
@@ -57,9 +57,20 @@ export default function Tela2() {
     }
   }
 
+
   return (
     <View style={styles.container}>
-      <Text style={styles.titleAgendamento}>Escalas</Text>
+
+      {/*
+      Text style={styles.titleAgendamento}>Escalas</Text>
+      <TextInput
+      placeholder="Pesquisar"
+      onChangeText={(s)=> search(s)}
+      />
+      */}
+      
+        
+      
       <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
       <FlatList
       refreshControl={<RefreshControl

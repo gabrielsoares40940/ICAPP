@@ -111,7 +111,7 @@ export default function Tela1({navigation}) {
       setHora2(currentHora);
       if (Platform.OS === 'android') {
         toggleHoraPicker();
-        setHora(currentHora.toLocaleTimeString());
+        setHora(formatHora(currentHora));
       }
     } else {
       toggleHoraPicker();
@@ -119,8 +119,20 @@ export default function Tela1({navigation}) {
   };
 
   const confirmIOSHora = () =>{
-    setHora(hora2.toLocaleTimeString());
+    setHora(formatHora(hora2));
     toggleHoraPicker();
+  }
+
+  const formatHora = (rawDate)=>{
+    let hora2 = new Date(rawDate);
+
+    let Hora = hora2.getHours();
+    let Minutos= hora2.getMinutes();
+
+    Hora = Hora < 10 ? '0' + Hora : Hora;
+    Minutos = Minutos < 10 ? '0' + Minutos : Minutos;
+    
+    return `${Hora}:${Minutos}`;
   }
 
 
@@ -204,6 +216,7 @@ export default function Tela1({navigation}) {
           onChange={onChangeHora}
           style={styles.datePicker}
           locale='pt-BR'
+          minuteInterval={30}
           />   
           )} 
 

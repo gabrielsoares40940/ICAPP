@@ -1,6 +1,6 @@
 import { Text } from 'react-native';
 import { useState } from 'react';
-import { View, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Image, TextInput, TouchableOpacity, Alert , KeyboardAvoidingView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './css/css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -46,6 +46,7 @@ export default function SignUp() {
       />
 
       <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
+      <KeyboardAvoidingView behavior='position' enabled>
         <Text style={styles.titleEmailSenha}>E-mail</Text>
         <View style={styles.inputArea}>
           <Ionicons name="mail" color="#808080" size={22} style={{paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
@@ -78,6 +79,7 @@ export default function SignUp() {
               }
             </TouchableOpacity>
           </View>
+          </KeyboardAvoidingView>
           <TouchableOpacity 
             style={styles.button}
             onPress={handleSignUp}

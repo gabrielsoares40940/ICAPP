@@ -20,7 +20,9 @@ export default function Logado() {
           options={{
               tabBarIcon:() => <Feather name='plus' color={"black"} size={30}/>,
               tabBarLabel:'Criar Escala',
-              headerShown: false
+              headerShown: false,
+              tabBarActiveTintColor:"black",
+              tabBarInactiveTintColor:"#808080",
           }}
         />
         <Tab.Screen 
@@ -29,7 +31,9 @@ export default function Logado() {
           options={{ 
             tabBarIcon:() => <Feather name='list' color={"black"} size={30}/>,
             tabBarBadge: "!" ,
-            headerShown: false
+            headerShown: false,
+            tabBarActiveTintColor:"black",
+            tabBarInactiveTintColor:"#808080",
           }} 
           
         />
@@ -39,7 +43,9 @@ export default function Logado() {
           component={Historico}
           options={{
             tabBarIcon: () => <Feather name='book-open' color={"black"} size={30} />,
-            headerShown: false
+            headerShown: false,
+            tabBarActiveTintColor:"black",
+            tabBarInactiveTintColor:"#808080",
           }}  
         />
       </Tab.Navigator>
