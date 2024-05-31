@@ -78,6 +78,19 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         width:150,
     },
+    button2:{
+        fontSize:16,
+        backgroundColor: '#fff' ,
+        padding:10,
+        margin: 10,
+        marginBottom: 30,
+        borderWidth:1,
+        borderRadius:20,
+        borderColor:'#fff',
+        alignItems:'center',
+        width:150,
+        marginTop:100,
+    },
     inputArea:{
         flexDirection:'row',
         fontSize:16,
@@ -199,11 +212,12 @@ export const styles = StyleSheet.create({
         width:250,
     },
     datePicker:{
-        height:120,
-        marginTop:-10,
+        height:70,
+        margin:5,
+
     },
     pickerButton:{
-        paddingHorizontal:20,
+        padding:15,
     },
     buttonText:{
         fontSize:14,
