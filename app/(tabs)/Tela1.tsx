@@ -143,7 +143,7 @@ export default function Tela1({navigation}) {
         <Animatable.View delay={50} animation="fadeInUp">
         <Animatable.View delay={100} animation="fadeInUp">
           <TextInput
-            placeholderTextColor="#808080"
+            placeholderTextColor="#fff"
             style={styles.input}
             placeholder="Nome"
             value={nome}
@@ -192,7 +192,7 @@ export default function Tela1({navigation}) {
           {!showPicker && (
             <Pressable onPress={toggleDatePicker}>
               <TextInput
-                placeholderTextColor="#808080"      
+                placeholderTextColor="#fff"      
                 style={styles.input}
                 placeholder="Dia"
                 value={dia}
@@ -245,7 +245,7 @@ export default function Tela1({navigation}) {
           {!showPickerHora && (
             <Pressable onPress={toggleHoraPicker}>
               <TextInput
-                placeholderTextColor="#808080"      
+                placeholderTextColor="#fff"      
                 style={styles.input}
                 placeholder="Horário"
                 value={hora}
@@ -258,11 +258,11 @@ export default function Tela1({navigation}) {
           </Animatable.View>
           <Animatable.View delay={250} animation="fadeInUp" style={styles.container2}>
           <TouchableOpacity style={styles.button2} onPress={handleCreateAppointment}>
-            <Text >Salvar Escala</Text>
+            <Text style={styles.input3}>Salvar Escala</Text>
           </TouchableOpacity>  
         </Animatable.View>
         <TouchableOpacity style={styles.botaoLogoff} onPress={()=> navigation.navigate("SingIn")}>
-            <Text>Logoff</Text>
+            <Text style={styles.input3}>Logoff</Text>
           </TouchableOpacity>
       </Animatable.View>
     </View>

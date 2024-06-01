@@ -35,6 +35,7 @@ export default function Home() {
 
   return (
         <View style={styles.container}>
+          
           <Image
           style={styles.img}
           source={require('../(tabs)/assets/imaculada.png')}

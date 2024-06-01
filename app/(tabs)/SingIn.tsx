@@ -1,4 +1,4 @@
-import { View, Image, TextInput, TouchableOpacity, Alert, Text, KeyboardAvoidingView} from 'react-native';
+import { View, Image, TextInput, TouchableOpacity, Alert, Text, KeyboardAvoidingView,StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_APP } from '@/firebaseConfig';
 import React, { useState } from 'react';
@@ -34,7 +34,7 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleApp}>ICAPP</Text>
+      <StatusBar backgroundColor='#63c2d1' barStyle='light-content'/>
       <Text style={styles.titleApp2}>Imaculada Conceição APP</Text>
       <Image
         style={styles.imgMenor}
@@ -42,22 +42,20 @@ export default function SignIn() {
       />
       <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
         <KeyboardAvoidingView behavior='position' enabled>
-          <Text style={styles.titleEmailSenha}>E-mail</Text>
           <View style={styles.inputArea}>
-          <Ionicons name="mail" color="#808080" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
+          <Ionicons name="mail" color="#fff" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
           <TextInput
-            placeholderTextColor="#808080"
+            placeholderTextColor="#fff"
             placeholder='Digite seu e-mail'
             style={styles.input2}
             onChangeText={text => setEmail(text)}
             value={email}
           />
           </View>
-          <Text style={styles.titleEmailSenha}>Senha</Text>
           <View style={styles.inputArea}>
-            <Ionicons name="lock-closed" color="#808080" size={22} style={styles.iconLock}/>
+            <Ionicons name="lock-closed" color="#fff" size={22} style={styles.iconLock}/>
             <TextInput
-              placeholderTextColor="#808080"
+              placeholderTextColor="#fff"
               placeholder='Digite sua senha'
               style={styles.input2}
               onChangeText={text => setPassword(text)}
@@ -66,9 +64,9 @@ export default function SignIn() {
             />
             <TouchableOpacity style={styles.icon} onPress={()=> setHidePassa(!hidePass)}>
               {hidePass ?
-              <Ionicons name="eye-off" color="#808080" size={22} />
+              <Ionicons name="eye-off" color="#fff" size={22} />
               :
-              <Ionicons name="eye" color="#808080" size={22} />
+              <Ionicons name="eye" color="#fff" size={22} />
               }
             </TouchableOpacity>
           </View>
@@ -77,7 +75,7 @@ export default function SignIn() {
             style={styles.button}
             onPress={validateLogin}
           >
-          <Text>Logar-se</Text>
+            <Text style={styles.input3}>Logar-se</Text>
           </TouchableOpacity>
           <Text onPress={()=>navigation.navigate('SingUp' as never)} style={styles.texto}>
             Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>

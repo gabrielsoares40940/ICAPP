@@ -61,8 +61,9 @@ export default function Tela2() {
   return (
     <View style={styles.container}>
 
+      
+      <Text style={styles.titleAgendamento}>Escalas</Text>
       {/*
-      Text style={styles.titleAgendamento}>Escalas</Text>
       <TextInput
       placeholder="Pesquisar"
       onChangeText={(s)=> search(s)}
