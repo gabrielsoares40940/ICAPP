@@ -34,7 +34,7 @@ export default function Tela2() {
         ...doc.data()
       }));
       const filterAgendamentos = agendamentosData.filter((item) => !item.hasOwnProperty('compareceu'))
-      setAgendamentos(agendamentosData);
+      setAgendamentos(filterAgendamentos);
     } catch (error) {
       console.error("Erro ao buscar escalas: ", error);
     }
