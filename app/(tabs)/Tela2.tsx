@@ -154,6 +154,7 @@ export default function Tela2() {
               </Animatable.View>
             ))}
           </View>
+
         )}
       />
 
