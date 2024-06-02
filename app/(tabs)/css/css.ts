@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     },
     titleApp: {
         fontSize:40,
-        color:'#63c2d1',
+        color:'#0A90FC',
         fontWeight: 'bold',
         fontFamily:'SpaceMono'
     },
@@ -60,19 +60,25 @@ export const styles = StyleSheet.create({
     titleAgendamento:{
         fontSize:30,
         margin:30,
-        color:'#63c2d1',
+        color:'#56A9B6',
         alignItems:'center',
         justifyContent:'center',
         marginTop:50,
         marginLeft:100,
+        fontWeight: 'bold',
+        fontFamily:'SpaceMono',
+        
     },
     titleAgendamento2:{
         fontSize:30,
         margin:30,
-        color:'#63c2d1',
+        color:'#56A9B6',
         alignItems:'center',
         justifyContent:'center',
-        marginTop:50, 
+        marginTop:50,
+        fontWeight: 'bold',
+        fontFamily:'SpaceMono',
+        
     },
     input:{
         fontSize:16,
@@ -87,18 +93,18 @@ export const styles = StyleSheet.create({
     },
     button:{
         fontSize:16,
-        backgroundColor: '#63c2d1',
+        backgroundColor: '#56A9B6',
         padding:10,
         margin: 10,
         marginBottom: 30,
         borderWidth:1,
         borderRadius:10,
-        borderColor:'#63c2d1',
+        borderColor:'#56A9B6',
         alignItems:'center',
     },
     button2:{
         fontSize:16,
-        backgroundColor: '#63c2d1' ,
+        backgroundColor: '#56A9B6' ,
         padding:10,
         margin: 10,
         marginBottom: 30,
@@ -128,7 +134,7 @@ export const styles = StyleSheet.create({
         width:'50%',
         color:'#fff',
         alignItems:'center',
-        justifyContent:'center',
+        justifyContent:'center'
     },
     icon:{
         width:'10%',
@@ -249,5 +255,17 @@ export const styles = StyleSheet.create({
         fontWeight:"500",
         color:"#fff",
     },
+    // Estilização do Tab Icons
+    tabIcons: {
+        width:60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: 'red',
+        alignItems:'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    }
 })
 
