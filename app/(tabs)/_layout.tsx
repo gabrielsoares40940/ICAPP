@@ -7,7 +7,7 @@ import React from 'react';
 export default function TabLayout() {
   return (
     <Stack
-      initialRouteName='SingIn'
+      initialRouteName='index'
       screenOptions={{
         headerShown: false,
       }}>

@@ -31,7 +31,7 @@ export default function Logado() {
           name="Tela1"
           component={Tela1}
           options={{
-              tabBarIcon:() => <Feather name='plus' color={"#fff"} size={30}/>,
+              tabBarIcon:() => <Feather name='plus' color={"#fff"} size={30} />,
               tabBarLabel:'Criar Escala',
               headerShown: false,
               tabBarActiveTintColor:"#fff",

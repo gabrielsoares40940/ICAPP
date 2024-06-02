@@ -1,6 +1,6 @@
 // PAGINA DE Preload
 import React,{ useEffect } from 'react';
-import {View, Image, ActivityIndicator, Text, TouchableOpacity} from 'react-native';
+import {View, Image, ActivityIndicator, Text} from 'react-native';
 import {styles} from './css/css';
 import {useNavigation } from '@react-navigation/native';
 
@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(()=>{
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
-      if(token){
+      if(token !== null){
         
         //validar token
 
@@ -43,7 +43,7 @@ export default function Home() {
           <Text/>
           <ActivityIndicator
             size='large'
-            color='#fff'
+            color='#63c2d1'
             animating={true}
           />
         </View>

@@ -64,6 +64,15 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         marginTop:50,
+        marginLeft:100,
+    },
+    titleAgendamento2:{
+        fontSize:30,
+        margin:30,
+        color:'#63c2d1',
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop:50, 
     },
     input:{
         fontSize:16,
@@ -73,6 +82,7 @@ export const styles = StyleSheet.create({
         padding:10,
         width:300,
         borderRadius:10,
+        color:'#fff',
         backgroundColor: '#63c2d1',
     },
     button:{

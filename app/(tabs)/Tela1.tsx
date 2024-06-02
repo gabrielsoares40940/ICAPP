@@ -8,9 +8,7 @@ import { styles } from './css/css';
 
 import * as Animatable from 'react-native-animatable';
 
-import DateTimePicker from '@react-native-community/datetimepicker'
-
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Tela1({navigation}) {
 
@@ -139,7 +137,7 @@ export default function Tela1({navigation}) {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.titleAgendamento}>Criar Escala</Text>
+      <Text style={styles.titleAgendamento2}>Criar Escala</Text>
         <Animatable.View delay={50} animation="fadeInUp">
         <Animatable.View delay={100} animation="fadeInUp">
           <TextInput

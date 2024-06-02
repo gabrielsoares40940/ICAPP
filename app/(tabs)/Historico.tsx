@@ -30,7 +30,7 @@ export default function Historico() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleAgendamento}>Histórico</Text>
+            <Text style={styles.titleAgendamento2}>Histórico</Text>
             <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
             <FlatList
                 refreshControl={<RefreshControl
