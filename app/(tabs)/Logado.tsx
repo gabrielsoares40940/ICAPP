@@ -18,9 +18,9 @@ export default function Logado() {
         position:"absolute",
         backgroundColor:'#63c2d1',
         borderTopWidth:0,
-        bottom:14,
-        left:14,
-        right:14,
+        // bottom:14,
+        // left:14,
+        // right:14,
         elevation:0,
         borderRadius:7,
         }
