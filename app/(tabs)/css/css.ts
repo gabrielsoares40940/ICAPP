@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     },
     titleApp: {
         fontSize:40,
-        color:'#0A90FC',
+        color:'#56A9B6',
         fontWeight: 'bold',
         fontFamily:'SpaceMono'
     },
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
         marginLeft:100,
         fontWeight: 'bold',
         fontFamily:'SpaceMono',
-        
+
     },
     titleAgendamento2:{
         fontSize:30,
