@@ -101,10 +101,10 @@ export default function Tela2() {
       <View style={{flexDirection:"row"}}>
          <Text style={styles.titleAgendamento}>Escalas</Text>
           <View style={{marginTop:50,marginLeft:40}}>
-            <TouchableOpacity style={{backgroundColor:'#63c2d1',borderRadius:10,padding:10,width:40,marginBottom:10}} onPress={gerarPdf}>
+            <TouchableOpacity style={{backgroundColor:'#63c2d1',borderRadius:10,padding:10,width:40,marginBottom:10, left: 30}} onPress={gerarPdf}>
               <AntDesign name='pdffile1' style={{color:'#fff',fontSize:20}}/>
             </TouchableOpacity>
-            <TouchableOpacity style={{backgroundColor:'#63c2d1',borderRadius:10,padding:10,width:40}} onPress={compartilharPdf} disabled={!pdfUri}>
+            <TouchableOpacity style={{backgroundColor:'#63c2d1',borderRadius:10,padding:10,width:40, left: 30}} onPress={compartilharPdf} disabled={!pdfUri}>
               <AntDesign name='sharealt' style={{color:'#fff',fontSize:20}}/>
             </TouchableOpacity>
           </View>
@@ -121,20 +121,19 @@ export default function Tela2() {
               <TouchableOpacity onPress={() => {setModalVisible(true)}}>
                 <Card.Title>Escala</Card.Title>
 
-                <Card.Divider>
+                <Card.Divider/>
                   <Text style={{ fontWeight: "bold", textAlign: "center" }}>Nome: {item.nome}</Text>
                   <Text style={{ fontWeight: "bold", textAlign: "center" }}>Dia: {item.dia}</Text>
                   <Text style={{ fontWeight: "bold", textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
                   <View style={styles.AreaCompareceu}>
-                    <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(item.id, "ausente")}>
+                  <Card.Divider/>                
+                    <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(item.id, "Ausente")}>
                       <Text style={styles.TextoExcluir}>Não compareceu</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(item.id, "presente")}>
+                    <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(item.id, "Presente")}>
                       <Text style={styles.TextoCompareceu}>Compareceu</Text>
                     </TouchableOpacity>
                   </View>
-                </Card.Divider>
-                
               </TouchableOpacity>
             </Card>
           </Animatable.View>
