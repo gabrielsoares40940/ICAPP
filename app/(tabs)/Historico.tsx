@@ -6,6 +6,7 @@ import { styles } from "./css/css";
 import { Card } from "react-native-elements";
 import { FIRESTORE_DB } from "@/firebaseConfig";
 import * as Animatable from 'react-native-animatable';
+import { Feather } from "@expo/vector-icons";
 
 export default function Historico() {
     const [agendamentosData, setAgendamentos] = useState([])
@@ -28,6 +29,10 @@ export default function Historico() {
         fetchAgendamentos()
     }, [])
 
+    function getCardColor(compareceu){
+        return compareceu === "presente" ? "green" : "red";
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.titleAgendamento2}>Histórico</Text>
@@ -43,12 +48,18 @@ export default function Historico() {
                     <Animatable.View delay={50} animation="fadeInUp">
                         <Card containerStyle={{ width: 350, height: 200, borderRadius: 20 }}>
                             <Card.Title>Escala</Card.Title>
-                            <Card.Divider>
-                                <Text style={{ fontWeight: "bold", textAlign: "center" }}>Nome: {item.nome} {console.log(item)}</Text>
-                                <Text style={{ fontWeight: "bold", textAlign: "center" }}>Dia: {item.dia}</Text>
-                                <Text style={{ fontWeight: "bold", textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
-                                <Text style={{ fontWeight: "bold", textAlign: "center", paddingBottom: 10 }}>{item.compareceu}</Text>
+                            <Card.Divider color="white">
+                                <Text style={{ color:'black', textAlign: "center" }}>Nome: {item.nome}</Text>
+                                <Text style={{ color:'black', textAlign: "center" }}>Dia: {item.dia}</Text>
+                                <Text style={{ color:'black', textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
+                                <Text style={{ color:getCardColor(item.compareceu), textAlign: "center", paddingBottom: 10 }} >{item.compareceu}</Text>
                             </Card.Divider>
+                            {item.compareceu=='presente' ? (
+                                <Feather name="check" color={'green'}/>
+
+                            ) : (
+                                <Feather name="x" color={'red'}/>
+                            )}
                         </Card>
                     </Animatable.View>
                 )}
