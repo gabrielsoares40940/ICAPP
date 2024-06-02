@@ -55,10 +55,10 @@ export default function Historico() {
                                 <Text style={{ color:getCardColor(item.compareceu), textAlign: "center", paddingBottom: 10 }} >{item.compareceu}</Text>
                             </Card.Divider>
                             {item.compareceu=='presente' ? (
-                                <Feather name="check" color={'green'}/>
+                                <Feather name="check" color={'green'} size={15}/>
 
                             ) : (
-                                <Feather name="x" color={'red'}/>
+                                <Feather name="x" color={'red'} size={15}/>
                             )}
                         </Card>
                     </Animatable.View>
