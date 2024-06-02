@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, Button, Alert, RefreshControl } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Button, Alert, RefreshControl, Modal, TextInput } from 'react-native';
 import { collection, getDocs, doc, updateDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
@@ -13,12 +13,14 @@ import * as Animatable from 'react-native-animatable';
 
 import { AntDesign } from '@expo/vector-icons';
 
-import {Ionicons} from '@expo/vector-icons';
+import {  } from '@expo/vector-icons';
 
 export default function Tela2() {
 
   const [agendamentos, setAgendamentos] = useState([]);
   const [pdfUri, setPdfUri] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [nome, setNome] = useState("")
 
   useEffect(() => {
     fetchAgendamentos();
@@ -91,10 +93,13 @@ export default function Tela2() {
     }
   };
 
+  console.log(nome)
   return (
+    /*Adicionando o modal para editar as informações  */
+
     <View style={styles.container}>
       <View style={{flexDirection:"row"}}>
-        <Text style={styles.titleAgendamento}>Escalas</Text>
+         <Text style={styles.titleAgendamento}>Escalas</Text>
           <View style={{marginTop:50,marginLeft:40}}>
             <TouchableOpacity style={{backgroundColor:'#63c2d1',borderRadius:10,padding:10,width:40,marginBottom:10}} onPress={gerarPdf}>
               <AntDesign name='pdffile1' style={{color:'#fff',fontSize:20}}/>
@@ -106,31 +111,67 @@ export default function Tela2() {
       </View>
       
       <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
-      <FlatList
+      <FlatList 
         refreshControl={<RefreshControl refreshing={false} onRefresh={fetchAgendamentos} />}
         data={agendamentos.filter(item => !item.hasOwnProperty('compareceu'))}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <Animatable.View delay={50} animation="fadeInUp">
             <Card containerStyle={{ width: 350, height: 200, borderRadius: 20 }}>
-              <Card.Title>Escala</Card.Title>
-              <Card.Divider>
-                <Text style={{ fontWeight: "bold", textAlign: "center" }}>Nome: {item.nome}</Text>
-                <Text style={{ fontWeight: "bold", textAlign: "center" }}>Dia: {item.dia}</Text>
-                <Text style={{ fontWeight: "bold", textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
-                <View style={styles.AreaCompareceu}>
-                  <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(item.id, "ausente")}>
-                    <Text style={styles.TextoExcluir}>Não compareceu</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(item.id, "presente")}>
-                    <Text style={styles.TextoCompareceu}>Compareceu</Text>
-                  </TouchableOpacity>
-                </View>
-              </Card.Divider>
+              <TouchableOpacity onPress={() => {setModalVisible(true)}}>
+                <Card.Title>Escala</Card.Title>
+
+                <Card.Divider>
+                  <Text style={{ fontWeight: "bold", textAlign: "center" }}>Nome: {item.nome}</Text>
+                  <Text style={{ fontWeight: "bold", textAlign: "center" }}>Dia: {item.dia}</Text>
+                  <Text style={{ fontWeight: "bold", textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
+                  <View style={styles.AreaCompareceu}>
+                    <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(item.id, "ausente")}>
+                      <Text style={styles.TextoExcluir}>Não compareceu</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(item.id, "presente")}>
+                      <Text style={styles.TextoCompareceu}>Compareceu</Text>
+                    </TouchableOpacity>
+                  </View>
+                </Card.Divider>
+                
+              </TouchableOpacity>
             </Card>
           </Animatable.View>
         )}
       />
+
+    {modalVisible && (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Button title="Abrir Modal" onPress={() => setModalVisible(true)} />
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+              <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
+                <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo nome</Text>
+                <TextInput 
+                  onChangeText={(e) => setNome(e)}
+                  value={nome}
+                  style={{    height: 40,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    paddingHorizontal: 10,
+                    marginBottom: 10,}}
+                />
+                <Button title="Fechar Modal" onPress={() => setModalVisible(false)} />
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
     </View>
+
+
+
   );
 }
