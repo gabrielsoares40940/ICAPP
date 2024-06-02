@@ -22,9 +22,11 @@ export default function Tela2() {
   const [modalVisible, setModalVisible] = useState(false)
   const [nome, setNome] = useState("")
 
+
   useEffect(() => {
     fetchAgendamentos();
   }, []);
+
 
   // Função de Atualizar sem alerta!
   async function fetchAgendamentos() {
@@ -132,6 +134,7 @@ export default function Tela2() {
                     <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(item.id, "presente")}>
                       <Text style={styles.TextoCompareceu}>Compareceu</Text>
                     </TouchableOpacity>
+                    
                   </View>
                 </Card.Divider>
                 
@@ -163,7 +166,29 @@ export default function Tela2() {
                     paddingHorizontal: 10,
                     marginBottom: 10,}}
                 />
-                <Button title="Fechar Modal" onPress={() => setModalVisible(false)} />
+                <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo dia</Text>
+                <TextInput 
+                  onChangeText={(e) => setNome(e)}
+                  value={nome}
+                  style={{    height: 40,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    paddingHorizontal: 10,
+                    marginBottom: 10,}}
+                />
+                <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo horario</Text>
+                <TextInput 
+                  onChangeText={(e) => setNome(e)}
+                  value={nome}
+                  style={{    height: 40,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    paddingHorizontal: 10,
+                    marginBottom: 10,}}
+                />
+                <Button title="Alterar Escala" onPress={() => setModalVisible(false)} />
               </View>
             </View>
           </Modal>
