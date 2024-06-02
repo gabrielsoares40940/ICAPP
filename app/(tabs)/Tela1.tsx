@@ -214,7 +214,6 @@ export default function Tela1({navigation}) {
           onChange={onChangeHora}
           style={styles.datePicker}
           locale='pt-BR'
-          minuteInterval={30}
           />   
           )} 
 
