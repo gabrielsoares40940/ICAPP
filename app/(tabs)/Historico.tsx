@@ -37,7 +37,7 @@ export default function Historico() {
         <View style={styles.container}>
             <Text style={styles.titleAgendamento2}>Histórico</Text>
             <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
-            <FlatList
+            <FlatList style={{marginBottom:50}}
                 refreshControl={<RefreshControl
                     refreshing={false}
                     onRefresh={() => fetchAgendamentos()}

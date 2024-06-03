@@ -33,8 +33,7 @@ export default function Tela2() {
         id: doc.id,
         ...doc.data()
       }));
-      const filterAgendamentos = agendamentosData.filter((item) => !item.hasOwnProperty('compareceu'))
-      setAgendamentos(filterAgendamentos);
+      setAgendamentos(agendamentosData);
     } catch (error) {
       console.error("Erro ao buscar escalas: ", error);
     }
@@ -105,7 +104,7 @@ export default function Tela2() {
     return acc;
   }, {});
 
-  const diasSemana = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+  const diasSemana = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo'];
 
   const agendamentosOrdenados = diasSemana.map(dia => [dia, agendamentosAgrupados[dia] || []]);
 
@@ -124,7 +123,7 @@ export default function Tela2() {
       </View>
 
       <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
-      <FlatList 
+      <FlatList style={{marginBottom:50}}
         refreshControl={<RefreshControl refreshing={false} onRefresh={fetchAgendamentos} />}
         data={agendamentosOrdenados}
         keyExtractor={(item, index) => index.toString()}
@@ -154,7 +153,6 @@ export default function Tela2() {
               </Animatable.View>
             ))}
           </View>
-
         )}
       />
 
