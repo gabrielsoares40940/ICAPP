@@ -16,7 +16,7 @@ import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; // Para o formato de data em português
 
 export default function Tela2() {
-
+  console.log('teste')
   const [agendamentos, setAgendamentos] = useState([]);
   const [pdfUri, setPdfUri] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
