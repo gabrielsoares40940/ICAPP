@@ -30,7 +30,7 @@ export default function Historico() {
     }, [])
 
     function getCardColor(compareceu){
-        return compareceu === "presente" ? "green" : "red";
+        return compareceu === "Presente" ? "green" : "red";
     }
 
     return (
@@ -46,20 +46,23 @@ export default function Historico() {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                     <Animatable.View delay={50} animation="fadeInUp">
-                        <Card containerStyle={{ width: 350, height: 200, borderRadius: 20 }}>
+                        <Card containerStyle={{ width: 350, height: 210, borderRadius: 20 }}>
                             <Card.Title>Escala</Card.Title>
+                            {item.compareceu=='Presente' ? (
+                                //<Feather name="check" color={'green'} size={15}/>
+                                <Feather name="check" color={'green'} size={20} style={{left: 300, top: -35}}/>
+
+                            ) : (
+                                //<Feather name="x" color={'red'} size={15}/>
+                                <Feather name="x" color={'red'} size={20} style={{left: 300, top: -35}}/>
+                            )}
                             <Card.Divider/>
                                 <Text style={{ color:'black', textAlign: "center" }}>Nome: {item.nome}</Text>
                                 <Text style={{ color:'black', textAlign: "center" }}>Dia: {item.dia}</Text>
                                 <Text style={{ color:'black', textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
                                 <Card.Divider/>
                                 <Text style={{ color:getCardColor(item.compareceu), textAlign: "center", paddingBottom: 10 }} >{item.compareceu}</Text>
-                            {item.compareceu=='presente' ? (
-                                <Feather name="check" color={'green'} size={15}/>
-
-                            ) : (
-                                <Feather name="x" color={'red'} size={15}/>
-                            )}
+                            
                         </Card>
                     </Animatable.View>
                 )}

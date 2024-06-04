@@ -93,14 +93,14 @@ export default function Tela2() {
 
     const file = await printToFileAsync({ html });
     
-    const newFileName = `${FileSystem.documentDirectory}Agendamentos_Semana.pdf`;
+    const newFileName = `${FileSystem.documentDirectory}Escala_Semana.pdf`;
     await FileSystem.moveAsync({
       from: file.uri,
       to: newFileName
     });
 
     setPdfUri(newFileName);
-    Alert.alert("Sucesso", "PDF gerado com sucesso!");
+    Alert.alert("Sucesso!", "PDF gerado com sucesso!");
   };
 
   const compartilharPdf = async () => {
@@ -247,9 +247,15 @@ export default function Tela2() {
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{item[0]}</Text>
             {item[1].map(agendamento => (
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
+<<<<<<< HEAD
                 <Card containerStyle={{ width: 350, height: 200, borderRadius: 20 }}>
                   <TouchableOpacity onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}>
                     <Card.Title>Escala</Card.Title>
+=======
+                <Card containerStyle={{ width: 350, height: 235, borderRadius: 20 }}>
+                    <Card.Title style={{fontSize:20}}>Escala</Card.Title>
+                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => setModalVisible(true)}/>
+>>>>>>> origin
                     <Card.Divider/>
                       <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
                       <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
@@ -262,7 +268,6 @@ export default function Tela2() {
                           <Text style={styles.TextoCompareceu}>Compareceu</Text>
                         </TouchableOpacity>
                       </View>
-                  </TouchableOpacity>
                 </Card>
               </Animatable.View>
             ))}
