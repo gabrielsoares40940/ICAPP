@@ -228,88 +228,94 @@ export default function Tela2() {
         data={agendamentosOrdenados}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <Animatable.View animation="fadeInUp" delay={500} duration={1000} useNativeDriver>
-            <Card containerStyle={{ borderRadius: 20, padding: 10 }}>
-              <Text style={styles.text}>{item[0]}</Text>
-              {item[1].map(agendamento => (
-                <Card containerStyle={{ borderRadius: 10, padding: 10 }} key={agendamento.id}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={styles.text}>{agendamento.nome}</Text>
-                    <Text style={styles.text}>{agendamento.dia}</Text>
-                    <Text style={styles.text}>{agendamento.hora}</Text>
-                    <Feather
-                      name='edit'
-                      size={20}
-                      color='#000'
-                      onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}
-                    />
-                    <TouchableOpacity onPress={() => presenteAusente(agendamento.id, true)}>
-                      <Text style={[styles.buttonText, styles.buttonYes]}>Sim</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => presenteAusente(agendamento.id, false)}>
-                      <Text style={[styles.buttonText, styles.buttonNo]}>Não</Text>
-                    </TouchableOpacity>
-                  </View>
+          <View key={item[0]}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{item[0]}</Text>
+            {item[1].map(agendamento => (
+              <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
+                <Card containerStyle={{ width: 350, height: 235, borderRadius: 20 }}>
+                    <Card.Title style={{fontSize:20}}>Escala</Card.Title>
+                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => setModalVisible(true)}/>
+                    <Card.Divider/>
+                      <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
+                      <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
+                      <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
+                      <View style={styles.AreaCompareceu}>
+                        <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "Ausente")}>
+                          <Text style={styles.TextoExcluir}>Não compareceu</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(agendamento.id, "Presente")}>
+                          <Text style={styles.TextoCompareceu}>Compareceu</Text>
+                        </TouchableOpacity>
+                      </View>
                 </Card>
-              ))}
-            </Card>
-          </Animatable.View>
+              </Animatable.View>
+            ))}
+          </View>
         )}
       />
 
-      <Modal visible={modalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Alterar Escala</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nome"
-            value={nome}
-            onChangeText={setNome}
-          />
-          <Pressable onPress={toggleDatePicker}>
-            <TextInput
-              style={styles.input}
-              placeholder="Dia"
-              value={dia}
-              onChangeText={setDia}
-              editable={false}
-            />
-          </Pressable>
-          {showPicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="spinner"
-              onChange={onChange}
-            />
-          )}
-          {showPicker && Platform.OS === 'ios' && (
-            <Button title="Confirmar" onPress={confirmIOSDate} />
-          )}
-          <Pressable onPress={toggleHoraPicker}>
-            <TextInput
-              style={styles.input}
-              placeholder="Hora"
-              value={hora}
-              onChangeText={setHora}
-              editable={false}
-            />
-          </Pressable>
-          {showPickerHora && (
-            <DateTimePicker
-              value={hora2}
-              mode="time"
-              display="spinner"
-              onChange={onChangeHora}
-            />
-          )}
-          {showPickerHora && Platform.OS === 'ios' && (
-            <Button title="Confirmar" onPress={confirmIOSHora} />
-          )}
-          <Button title="Salvar Alterações" onPress={() => alterarEscala(selectedAgendamentoId)} />
-          <Button title="Cancelar" onPress={() => setModalVisible(false)} color="red" />
-        </View>
-      </Modal>
+    {modalVisible && (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Button title="Abrir Modal" onPress={() => setModalVisible(true)} />
+        <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={() => setModalVisible(false)}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
+              <Feather name="x" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
+              <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text><TextInput
+                style={styles.input}
+                placeholder="Nome"
+                value={nome}
+                onChangeText={setNome}
+              />
+              <Pressable onPress={toggleDatePicker}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Dia"
+                  value={dia}
+                  onChangeText={setDia}
+                  editable={false}
+                />
+              </Pressable>
+              {showPicker && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  display="spinner"
+                  onChange={onChange}
+                />
+              )}
+              {showPicker && Platform.OS === 'ios' && (
+                <Button title="Confirmar" onPress={confirmIOSDate} />
+              )}
+              <Pressable onPress={toggleHoraPicker}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Hora"
+                  value={hora}
+                  onChangeText={setHora}
+                  editable={false}
+                />
+              </Pressable>
+              {showPickerHora && (
+                <DateTimePicker
+                  value={hora2}
+                  mode="time"
+                  display="spinner"
+                  onChange={onChangeHora}
+                />
+              )}
+              {showPickerHora && Platform.OS === 'ios' && (
+                <Button title="Confirmar" onPress={confirmIOSHora} />
+              )}
+              <TouchableOpacity style={styles.button2} onPress={() => alterarEscala(selectedAgendamentoId)}>
+                <Text style={styles.input2}>Alterar escala</Text>
+              </TouchableOpacity>  
+            </View>
+          </View>
+        </Modal>
+      </View>
+    )}
     </View>
   );
+  
 }
