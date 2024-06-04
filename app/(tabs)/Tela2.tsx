@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, Button, Alert, RefreshControl, Modal, TextInput,Platform, Pressable } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Button, Alert, RefreshControl, Modal, TextInput, Platform, Pressable } from 'react-native';
 import { collection, getDocs, doc, updateDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 import { Card } from 'react-native-elements';
 import { Feather } from "@expo/vector-icons";
-
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { printToFileAsync } from 'expo-print';
@@ -19,7 +18,6 @@ import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; // Para o formato de data em português
 
 export default function Tela2() {
-  console.log('teste')
   const [agendamentos, setAgendamentos] = useState([]);
   const [pdfUri, setPdfUri] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,6 +25,11 @@ export default function Tela2() {
   const [dia, setDia] = useState(''); 
   const [hora, setHora] = useState('');
   const [selectedAgendamentoId, setSelectedAgendamentoId] = useState(null);
+  const [dataAtual] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const [hora2, setHora2] = useState(new Date());
+  const [showPickerHora, setShowPickerHora] = useState(false);
 
   useEffect(() => {
     fetchAgendamentos();
@@ -116,11 +119,6 @@ export default function Tela2() {
     return format(date, 'EEEE', { locale: ptBR });
   };
 
-   //Trabalhando com datas!
-   const [dataAtual] = useState(new Date()); //Criado para barrar as datas anteriores
-   const [date,setDate] = useState(new Date());
-   const [showPicker, setShowPicker] = useState(false);
-
   const agendamentosAgrupados = agendamentos.reduce((acc, agendamento) => {
     const dayOfWeek = getDayOfWeek(agendamento.dia);
     if (!acc[dayOfWeek]) {
@@ -134,37 +132,32 @@ export default function Tela2() {
 
   const agendamentosOrdenados = diasSemana.map(dia => [dia, agendamentosAgrupados[dia] || []]);
 
-  const toggleDatePicker = () =>{
-    setShowPicker(!showPicker)
+  const toggleDatePicker = () => {
+    setShowPicker(!showPicker);
   };
 
-  const onChange = ({ type }, selectedDate) => {
-    if (!(selectedDate instanceof Date) || isNaN(selectedDate.getTime())) {
-      throw new Error("selectedDate deve ser uma instância válida de Date");
-    }
-  
-    if (type === "set") {
-      const currentDate = selectedDate;
+  const onChange = (event, selectedDate) => {
+    if (event.type === "set" && selectedDate) {
+      const currentDate = selectedDate || date;
       setDate(currentDate);
+      setDia(formatDate(currentDate));
       if (Platform.OS === 'android') {
         toggleDatePicker();
-        setDia(formatDate(currentDate));
       }
     } else {
       toggleDatePicker();
     }
   };
 
-  const confirmIOSDate = () =>{
+  const confirmIOSDate = () => {
     setDia(formatDate(date));
     toggleDatePicker();
   }
 
-  const formatDate = (rawDate)=>{
+  const formatDate = (rawDate) => {
     let date = new Date(rawDate);
-
     let year = date.getFullYear();
-    let month = date.getMonth()+1;
+    let month = date.getMonth() + 1;
     let day = date.getDate();
 
     month = month < 10 ? '0' + month : month;
@@ -173,40 +166,33 @@ export default function Tela2() {
     return `${day}/${month}/${year}`;
   }
 
-  // Trabalhando com Horas
-  const [hora2,setHora2] = useState(new Date());
-  const [showPickerHora, setShowPickerHora] = useState(false);
-
-  const toggleHoraPicker = () =>{
-    setShowPickerHora(!showPickerHora)
+  const toggleHoraPicker = () => {
+    setShowPickerHora(!showPickerHora);
   };
-  const onChangeHora = ({ type }, selectedHora) => {
-    if (!(selectedHora instanceof Date) || isNaN(selectedHora.getTime())) {
-      throw new Error("selectedDate deve ser uma instância válida de Date");
-    }
-  
-    if (type === "set") {
-      const currentHora = selectedHora;
+
+  const onChangeHora = (event, selectedHora) => {
+    if (event.type === "set" && selectedHora) {
+      const currentHora = selectedHora || hora2;
       setHora2(currentHora);
+      setHora(formatHora(currentHora));
       if (Platform.OS === 'android') {
         toggleHoraPicker();
-        setHora(formatHora(currentHora));
       }
     } else {
       toggleHoraPicker();
     }
   };
 
-  const confirmIOSHora = () =>{
+  const confirmIOSHora = () => {
     setHora(formatHora(hora2));
     toggleHoraPicker();
   }
 
-  const formatHora = (rawDate)=>{
+  const formatHora = (rawDate) => {
     let hora2 = new Date(rawDate);
 
     let Hora = hora2.getHours();
-    let Minutos= hora2.getMinutes();
+    let Minutos = hora2.getMinutes();
 
     Hora = Hora < 10 ? '0' + Hora : Hora;
     Minutos = Minutos < 10 ? '0' + Minutos : Minutos;
@@ -239,174 +225,91 @@ export default function Tela2() {
       <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
       <FlatList style={{marginBottom:50}}
         refreshControl={<RefreshControl refreshing={false} onRefresh={fetchAgendamentos} />}
-        
         data={agendamentosOrdenados}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View key={item[0]}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{item[0]}</Text>
-            {item[1].map(agendamento => (
-              <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
-<<<<<<< HEAD
-                <Card containerStyle={{ width: 350, height: 200, borderRadius: 20 }}>
-                  <TouchableOpacity onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}>
-                    <Card.Title>Escala</Card.Title>
-=======
-                <Card containerStyle={{ width: 350, height: 235, borderRadius: 20 }}>
-                    <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => setModalVisible(true)}/>
->>>>>>> origin
-                    <Card.Divider/>
-                      <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
-                      <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
-                      <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
-                      <View style={styles.AreaCompareceu}>
-                        <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "Ausente")}>
-                          <Text style={styles.TextoExcluir}>Não compareceu</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(agendamento.id, "Presente")}>
-                          <Text style={styles.TextoCompareceu}>Compareceu</Text>
-                        </TouchableOpacity>
-                      </View>
+          <Animatable.View animation="fadeInUp" delay={500} duration={1000} useNativeDriver>
+            <Card containerStyle={{ borderRadius: 20, padding: 10 }}>
+              <Text style={styles.text}>{item[0]}</Text>
+              {item[1].map(agendamento => (
+                <Card containerStyle={{ borderRadius: 10, padding: 10 }} key={agendamento.id}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text style={styles.text}>{agendamento.nome}</Text>
+                    <Text style={styles.text}>{agendamento.dia}</Text>
+                    <Text style={styles.text}>{agendamento.hora}</Text>
+                    <Feather
+                      name='edit'
+                      size={20}
+                      color='#000'
+                      onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}
+                    />
+                    <TouchableOpacity onPress={() => presenteAusente(agendamento.id, true)}>
+                      <Text style={[styles.buttonText, styles.buttonYes]}>Sim</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => presenteAusente(agendamento.id, false)}>
+                      <Text style={[styles.buttonText, styles.buttonNo]}>Não</Text>
+                    </TouchableOpacity>
+                  </View>
                 </Card>
-              </Animatable.View>
-            ))}
-          </View>
+              ))}
+            </Card>
+          </Animatable.View>
         )}
       />
 
-      {modalVisible && (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Button title="Abrir Modal" onPress={() => setModalVisible(true)} />
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-              <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
-                <Feather name="x" color={'red'} size={30} style={{left: 180, top: -30}} onPress={() => setModalVisible(false)}/>
-                <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text>
-                <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo nome</Text>
-                <TextInput 
-                  onChangeText={(e) => setNome(e)}
-                  value={nome}
-                  style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 8, paddingHorizontal: 10, marginBottom: 10 }}
-                />
-
-                {/* Trabalhando com datas*/}
-                <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo dia</Text>
-                {showPicker && (
-                  <DateTimePicker 
-                  timeZoneName="America/Fortaleza"
-                  value={date}
-                  mode={'date'}
-                  is24Hour={true}
-                  display='default'
-                  minimumDate={dataAtual}
-                  onChange={onChange}
-                  style={styles.datePicker}
-                  locale='pt-BR'
-                  
-                  />   
-                  )} 
-
-                  {showPicker && Platform.OS==="ios" &&(
-                    <View
-                        style={{flexDirection:"row", justifyContent:"space-around"}}>
-                          <TouchableOpacity 
-                          style={[styles.pickerButton,{backgroundColor:"#ec5353",borderRadius:20,margin:10,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                          onPress={toggleDatePicker}
-                          >
-                              <Text
-                              style={[styles.buttonText,{color:"#fff"}]}
-                              >Cancelar</Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity 
-                            style={[styles.pickerButton,{backgroundColor:"#4169e1",borderRadius:20,margin:10,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                          onPress={confirmIOSDate}
-                            >
-                              <Text
-                              style={[styles.buttonText,{color:"#fff"}]}
-                              >Confirmar</Text>
-                          </TouchableOpacity>
-                    </View>
-                  )}
-
-                  {!showPicker && (
-                    <Pressable onPress={toggleDatePicker}>
-                      <TextInput
-                        placeholderTextColor="#fff"      
-                        style={styles.input}
-                        placeholder="Dia"
-                        value={dia}
-                        onChangeText={(e)=>setDia(e)}
-                        editable={false}
-                        onPressIn={toggleDatePicker}
-                        />
-                    </Pressable>
-                  )}
-
-
-                <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo horário</Text>
-                  {showPickerHora && (
-                    <DateTimePicker 
-                    timeZoneName="America/Fortaleza"
-                    value={hora2}
-                    mode={'time'}
-                    is24Hour={false}
-                    display='spinner'
-                    minimumDate={new Date()}
-                    onChange={onChangeHora}
-                    style={styles.datePicker}
-                    locale='pt-BR'
-                    />   
-                    )} 
-
-                    {showPickerHora && Platform.OS==="ios" &&(
-                      <View
-                          style={{flexDirection:"row", justifyContent:"space-around" }}>
-                            <TouchableOpacity 
-                            style={[styles.pickerButton,{backgroundColor:"#ec5353",borderRadius:20,margin:5,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                            onPress={toggleHoraPicker}
-                            >
-                                <Text
-                                style={[styles.buttonText,{color:"#fff"}]}
-                                >Cancelar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                            style={[styles.pickerButton,{backgroundColor:"#4169e1",borderRadius:20,margin:5,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                            onPress={confirmIOSHora}
-                              >
-                                <Text
-                                style={[styles.buttonText,{color:"#fff"}]}
-                                >Confirmar</Text>
-                            </TouchableOpacity>
-                      </View>
-                    )}
-
-                    {!showPickerHora && (
-                      <Pressable onPress={toggleHoraPicker}>
-                        <TextInput
-                          placeholderTextColor="#fff"      
-                          style={styles.input}
-                          placeholder="Horário"
-                          value={hora}
-                          onChangeText={(e)=>setHora(e)}
-                          editable={false}
-                          onPressIn={toggleHoraPicker}
-                          />
-                      </Pressable>
-                    )}
-                <TouchableOpacity style={styles.button} onPress={() => alterarEscala(selectedAgendamentoId)}>
-                  <Text style={styles.input2}>Alterar escala</Text>
-                </TouchableOpacity>  
-              </View>
-            </View>
-          </Modal>
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>Alterar Escala</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Nome"
+            value={nome}
+            onChangeText={setNome}
+          />
+          <Pressable onPress={toggleDatePicker}>
+            <TextInput
+              style={styles.input}
+              placeholder="Dia"
+              value={dia}
+              onChangeText={setDia}
+              editable={false}
+            />
+          </Pressable>
+          {showPicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="spinner"
+              onChange={onChange}
+            />
+          )}
+          {showPicker && Platform.OS === 'ios' && (
+            <Button title="Confirmar" onPress={confirmIOSDate} />
+          )}
+          <Pressable onPress={toggleHoraPicker}>
+            <TextInput
+              style={styles.input}
+              placeholder="Hora"
+              value={hora}
+              onChangeText={setHora}
+              editable={false}
+            />
+          </Pressable>
+          {showPickerHora && (
+            <DateTimePicker
+              value={hora2}
+              mode="time"
+              display="spinner"
+              onChange={onChangeHora}
+            />
+          )}
+          {showPickerHora && Platform.OS === 'ios' && (
+            <Button title="Confirmar" onPress={confirmIOSHora} />
+          )}
+          <Button title="Salvar Alterações" onPress={() => alterarEscala(selectedAgendamentoId)} />
+          <Button title="Cancelar" onPress={() => setModalVisible(false)} color="red" />
         </View>
-      )}
+      </Modal>
     </View>
   );
 }
