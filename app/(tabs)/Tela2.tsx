@@ -135,19 +135,18 @@ export default function Tela2() {
                 <Card containerStyle={{ width: 350, height: 200, borderRadius: 20 }}>
                   <TouchableOpacity onPress={() => { setModalVisible(true) }}>
                     <Card.Title>Escala</Card.Title>
-                    <Card.Divider>
-                      <Text style={{ fontWeight: "bold", textAlign: "center" }}>Nome: {agendamento.nome}</Text>
-                      <Text style={{ fontWeight: "bold", textAlign: "center" }}>Dia: {agendamento.dia}</Text>
-                      <Text style={{ fontWeight: "bold", textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
+                    <Card.Divider/>
+                      <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
+                      <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
+                      <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
                       <View style={styles.AreaCompareceu}>
-                        <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "ausente")}>
+                        <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "Ausente")}>
                           <Text style={styles.TextoExcluir}>Não compareceu</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(agendamento.id, "presente")}>
+                        <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(agendamento.id, "Presente")}>
                           <Text style={styles.TextoCompareceu}>Compareceu</Text>
                         </TouchableOpacity>
                       </View>
-                    </Card.Divider>
                   </TouchableOpacity>
                 </Card>
               </Animatable.View>
@@ -185,7 +184,9 @@ export default function Tela2() {
                   value={nome}
                   style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 8, paddingHorizontal: 10, marginBottom: 10 }}
                 />
-                <Button title="Alterar Escala" onPress={() => setModalVisible(false)} />
+                <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
+                  <Text style={styles.input2}>Alterar escala</Text>
+                </TouchableOpacity>  
               </View>
             </View>
           </Modal>
