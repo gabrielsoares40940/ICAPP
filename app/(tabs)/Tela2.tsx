@@ -73,14 +73,14 @@ export default function Tela2() {
 
     const file = await printToFileAsync({ html });
     
-    const newFileName = `${FileSystem.documentDirectory}Agendamentos_Semana.pdf`;
+    const newFileName = `${FileSystem.documentDirectory}Escala_Semana.pdf`;
     await FileSystem.moveAsync({
       from: file.uri,
       to: newFileName
     });
 
     setPdfUri(newFileName);
-    Alert.alert("Sucesso", "PDF gerado com sucesso!");
+    Alert.alert("Sucesso!", "PDF gerado com sucesso!");
   };
 
   const compartilharPdf = async () => {
