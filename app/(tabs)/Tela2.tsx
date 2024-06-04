@@ -4,6 +4,7 @@ import { collection, getDocs, doc, updateDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 import { Card } from 'react-native-elements';
+import { Feather } from "@expo/vector-icons";
 
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
@@ -166,6 +167,8 @@ export default function Tela2() {
           >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
               <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
+                <Feather name="x" color={'red'} size={30} style={{left: 180, top: -30}} onPress={() => setModalVisible(false)}/>
+                <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text>
                 <Text style={{ fontSize: 20, marginBottom: 10 }}>Insira o novo nome</Text>
                 <TextInput 
                   onChangeText={(e) => setNome(e)}
