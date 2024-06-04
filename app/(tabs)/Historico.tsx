@@ -19,7 +19,7 @@ export default function Historico() {
                     ...doc.data()
                 }
             ));
-            setAgendamentos(agendamentosData as never);
+            setAgendamentos(agendamentosData);
         } catch (error) {
             console.error("Erro ao buscar escalas: ", error);
         }
