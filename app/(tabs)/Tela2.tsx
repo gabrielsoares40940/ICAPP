@@ -81,8 +81,24 @@ export default function Tela2() {
   async function deleteItems(id){
     console.log('Meu', id)
     try {
-      await deleteDoc(doc(FIRESTORE_DB, "123", id));
-      Alert.alert("Sucesso!", "Escala deletada com sucesso!");
+      //await deleteDoc(doc(FIRESTORE_DB, "123", id));
+      Alert.alert(
+        'Deletar escala?', // Título do alerta
+        'Tem certeza de que quer deletar a escala?', // Mensagem do alerta
+        [
+          {
+            text: 'SIM', // Texto do botão
+            onPress: () => deleteDoc(doc(FIRESTORE_DB, "123", id)), // Ação ao pressionar o botão
+          },
+          
+          {
+            text: 'NÃO', // Texto do botão
+            onPress: () => fetchAgendamentos() // Ação ao pressionar o botão
+          },
+          
+        ],
+        {cancelable: false} // O alerta não pode ser cancelado ao tocar fora dele
+      );
       // Atualizar a lista após a deleção
       fetchAgendamentos();
     } catch (error) {
@@ -250,11 +266,11 @@ export default function Tela2() {
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{item[0]}</Text>
             {item[1].map(agendamento => (
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
-                <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent: 'space-between', padding: 10 }}>
+                <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent:"space-between", padding: 10 }}>
                     <Card.Title style={{fontSize:20}}>Escala</Card.Title>
+                    <Feather name="trash" style={{ width:20, height:20, marginLeft:'auto', bottom:45}} color={'gray'} size={20} onPress={() => deleteItems(agendamento.id)}/>
+                    <Feather name="edit" color={'gray'} size={20} style={{ position:'absolute' , width:20, height:20}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
                     <Card.Divider/>
-                    <Feather name="trash" color={'gray'} size={20} style={{left: 300, top: -54}} onPress={() => deleteItems(agendamento.id)}/>
-                    <Feather name="edit" color={'gray'} size={20} style={{left: 270, top: -75}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
                       <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
                       <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
                       <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
