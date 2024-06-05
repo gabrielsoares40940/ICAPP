@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert , Platform, Pressable} from 'react-native';
 import {addDoc, collection } from "firebase/firestore";
+import { Feather } from "@expo/vector-icons";
 
 
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
@@ -137,7 +138,8 @@ export default function Tela1({navigation}) {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.titleAgendamento2}>Criar Escala</Text>
+        <Feather name="home" style={{width:50, height:50, marginRight:'auto', bottom:95, right:-7}} color={'black'} size={50} onPress={()=> navigation.navigate("SingIn")}/>
+        <Text style={styles.titleAgendamento2}>Criar Escala</Text>
         <Animatable.View delay={50} animation="fadeInUp">
         <Animatable.View delay={100} animation="fadeInUp">
           <TextInput
