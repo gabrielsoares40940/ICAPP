@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity, Button, Alert, RefreshControl, Modal, TextInput, Platform, Pressable } from 'react-native';
-import { collection, getDocs, doc, updateDoc } from '@firebase/firestore';
+import { collection, getDocs, doc, updateDoc, deleteDoc } from '@firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
 import { Card } from 'react-native-elements';
@@ -42,9 +42,10 @@ export default function Tela2() {
         id: doc.id,
         ...doc.data()
       }));
-      setAgendamentos(agendamentosData);
+      const filterAgendamentos = agendamentosData.filter((item) => !item.hasOwnProperty("compareceu"))
+      setAgendamentos(filterAgendamentos);
     } catch (error) {
-      console.error("Erro ao buscar escalas: ", error);
+      console.error("Erro!","Erro ao buscar escalas: ", error);
     }
   }
 
@@ -53,25 +54,39 @@ export default function Tela2() {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
         compareceu: situation
       });
-      Alert.alert("Sucesso", "Status de comparecimento atualizado!");
-      fetchAgendamentos();
+      Alert.alert("Sucesso!", "Status de comparecimento atualizado!");
+      // Filtra o agendamento atualizado para remover da tela
+      setAgendamentos(prevAgendamentos => prevAgendamentos.filter(agendamento => agendamento.id !== id ));
     } catch (error) {
-      console.error("Erro ao atualizar o status de comparecimento: ", error);
+      console.error("Erro!","Erro ao atualizar o status de comparecimento: ", error);
     }
   }
 
   async function alterarEscala(id) {
+    console.log(id)
     try {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
         nome: nome,
         dia: dia,
         hora: hora
       });
-      Alert.alert("Sucesso", "Escala atualizada!");
+      Alert.alert("Sucesso!", "Escala atualizada!");
       fetchAgendamentos();
       setModalVisible(false);
     } catch (error) {
-      console.error("Erro ao atualizar escala: ", error);
+      console.error("Erro!","Erro ao atualizar escala: ", error);
+    }
+  }
+
+  async function deleteItems(id){
+    console.log('Meu', id)
+    try {
+      await deleteDoc(doc(FIRESTORE_DB, "123", id));
+      Alert.alert("Sucesso!", "Escala deletada com sucesso!");
+      // Atualizar a lista após a deleção
+      fetchAgendamentos();
+    } catch (error) {
+      console.error("Erro!", "Erro ao buscar escala: ", error);
     }
   }
 
@@ -88,7 +103,7 @@ export default function Tela2() {
     const html = `
       <html>
         <body>
-          <h1>Segue a lista de agendamentos desta semana!</h1>
+          <h1>Segue a escala desta semana!</h1>
           ${listaHtml}
         </body>
       </html>
@@ -110,7 +125,7 @@ export default function Tela2() {
     if (pdfUri) {
       await shareAsync(pdfUri);
     } else {
-      Alert.alert("Erro", "Por favor, gere o PDF primeiro.");
+      Alert.alert("Erro!", "Por favor, gere o PDF primeiro.");
     }
   };
 
@@ -130,7 +145,10 @@ export default function Tela2() {
 
   const diasSemana = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo'];
 
-  const agendamentosOrdenados = diasSemana.map(dia => [dia, agendamentosAgrupados[dia] || []]);
+  // Substitua esta linha
+  const agendamentosOrdenados = diasSemana
+    .map(dia => [dia, agendamentosAgrupados[dia] || []])
+    .filter(([dia, agendamentos]) => agendamentos.length > 0); // Filtra apenas os dias com agendamentos
 
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);
@@ -232,10 +250,11 @@ export default function Tela2() {
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{item[0]}</Text>
             {item[1].map(agendamento => (
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
-                <Card containerStyle={{ width: 350, height: 235, borderRadius: 20 }}>
+                <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent: 'space-between', padding: 10 }}>
                     <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => setModalVisible(true)}/>
                     <Card.Divider/>
+                    <Feather name="trash" color={'gray'} size={20} style={{left: 300, top: -54}} onPress={() => deleteItems(agendamento.id)}/>
+                    <Feather name="edit" color={'gray'} size={20} style={{left: 270, top: -75}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
                       <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
                       <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
                       <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
@@ -256,12 +275,12 @@ export default function Tela2() {
 
     {modalVisible && (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button title="Abrir Modal" onPress={() => setModalVisible(true)} />
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={() => setModalVisible(false)}>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-            <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
-              <Feather name="x" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
-              <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text><TextInput
+            <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 30, width: 390, height:500 }}>
+              <Feather name="x-square" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
+              <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text>
+              <TextInput
                 style={styles.input}
                 placeholder="Nome"
                 value={nome}
@@ -317,5 +336,4 @@ export default function Tela2() {
     )}
     </View>
   );
-  
 }
