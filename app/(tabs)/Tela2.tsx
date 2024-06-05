@@ -17,7 +17,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; // Para o formato de data em português
 
-export default function Tela2() {
+export default function Tela2({navigation}) {
   const [agendamentos, setAgendamentos] = useState([]);
   const [pdfUri, setPdfUri] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -246,6 +246,7 @@ export default function Tela2() {
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <Text style={styles.titleAgendamento}>Escalas</Text>
+        <Feather name="home" style={{width:50, height:50, marginRight: 'auto', top:40, right:250}} color={'black'} size={50} onPress={()=> navigation.navigate("SingIn")}/>
         <View style={{ marginTop: 50, marginLeft: 40 }}>
           <TouchableOpacity style={{ backgroundColor: '#63c2d1', borderRadius: 10, padding: 10, width: 40, marginBottom: 10 }} onPress={gerarPdf}>
             <AntDesign name='pdffile1' style={{ color: '#fff', fontSize: 20 }} />
