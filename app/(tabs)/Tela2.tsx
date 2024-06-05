@@ -143,7 +143,7 @@ export default function Tela2() {
     return acc;
   }, {});
 
-  const diasSemana = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo'];
+  const diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
 
   // Substitua esta linha
   const agendamentosOrdenados = diasSemana
