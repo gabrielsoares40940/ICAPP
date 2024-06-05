@@ -42,7 +42,8 @@ export default function Tela2() {
         id: doc.id,
         ...doc.data()
       }));
-      setAgendamentos(agendamentosData);
+      const filterAgendamentos = agendamentosData.filter((item) => !item.hasOwnProperty("compareceu"))
+      setAgendamentos(filterAgendamentos);
     } catch (error) {
       console.error("Erro ao buscar escalas: ", error);
     }
@@ -54,13 +55,15 @@ export default function Tela2() {
         compareceu: situation
       });
       Alert.alert("Sucesso", "Status de comparecimento atualizado!");
-      fetchAgendamentos();
+      // Filtra o agendamento atualizado para remover da tela
+      setAgendamentos(prevAgendamentos => prevAgendamentos.filter(agendamento => agendamento.id !== id ));
     } catch (error) {
       console.error("Erro ao atualizar o status de comparecimento: ", error);
     }
   }
 
   async function alterarEscala(id) {
+    console.log(id)
     try {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
         nome: nome,
@@ -130,7 +133,10 @@ export default function Tela2() {
 
   const diasSemana = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo'];
 
-  const agendamentosOrdenados = diasSemana.map(dia => [dia, agendamentosAgrupados[dia] || []]);
+  // Substitua esta linha
+  const agendamentosOrdenados = diasSemana
+    .map(dia => [dia, agendamentosAgrupados[dia] || []])
+    .filter(([dia, agendamentos]) => agendamentos.length > 0); // Filtra apenas os dias com agendamentos
 
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);
@@ -234,7 +240,7 @@ export default function Tela2() {
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
                 <Card containerStyle={{ width: 350, height: 235, borderRadius: 20 }}>
                     <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => setModalVisible(true)}/>
+                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
                     <Card.Divider/>
                       <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
                       <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
@@ -256,12 +262,12 @@ export default function Tela2() {
 
     {modalVisible && (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button title="Abrir Modal" onPress={() => setModalVisible(true)} />
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={() => setModalVisible(false)}>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
             <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
               <Feather name="x" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
-              <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text><TextInput
+              <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text>
+              <TextInput
                 style={styles.input}
                 placeholder="Nome"
                 value={nome}
@@ -317,5 +323,4 @@ export default function Tela2() {
     )}
     </View>
   );
-  
 }
