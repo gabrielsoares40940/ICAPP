@@ -36,7 +36,7 @@ export default function Historico({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.titleAgendamento2}>Histórico</Text>
-            <Feather name="home" style={{width:50, height:50, marginRight: 'auto', bottom:80, right:-7}} color={'black'} size={50} onPress={()=> navigation.navigate("SingIn")}/>
+            <Feather name="home" style={{width:50, height:50, marginRight: 'auto', bottom:65, right:-20}} color={'#56A9B6'} size={30} onPress={()=> navigation.navigate("SingIn")}/>
             <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
             <FlatList style={{marginBottom:50}}
                 refreshControl={<RefreshControl
