@@ -54,7 +54,11 @@ export default function Tela2() {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
         compareceu: situation
       });
+<<<<<<< HEAD
       Alert.alert("Sucesso!", "Status de comparecimento atualizado!");
+=======
+      Alert.alert("Sucesso", "Status de comparecimento atualizado!");
+>>>>>>> 647137b10424b7a104c0ff43bb361b1fe2623040
       // Filtra o agendamento atualizado para remover da tela
       setAgendamentos(prevAgendamentos => prevAgendamentos.filter(agendamento => agendamento.id !== id ));
     } catch (error) {
@@ -252,6 +256,10 @@ export default function Tela2() {
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
                 <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent: 'space-between', padding: 10 }}>
                     <Card.Title style={{fontSize:20}}>Escala</Card.Title>
+<<<<<<< HEAD
+=======
+                    <Feather name="pen-tool" color={'gray'} size={20} style={{left: 300, top: -40}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
+>>>>>>> 647137b10424b7a104c0ff43bb361b1fe2623040
                     <Card.Divider/>
                     <Feather name="trash" color={'gray'} size={20} style={{left: 300, top: -54}} onPress={() => deleteItems(agendamento.id)}/>
                     <Feather name="edit" color={'gray'} size={20} style={{left: 270, top: -75}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
@@ -277,8 +285,13 @@ export default function Tela2() {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={() => setModalVisible(false)}>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+<<<<<<< HEAD
             <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 30, width: 390, height:500 }}>
               <Feather name="x-square" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
+=======
+            <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 10 }}>
+              <Feather name="x" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
+>>>>>>> 647137b10424b7a104c0ff43bb361b1fe2623040
               <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text>
               <TextInput
                 style={styles.input}
@@ -336,4 +349,8 @@ export default function Tela2() {
     )}
     </View>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 647137b10424b7a104c0ff43bb361b1fe2623040
