@@ -260,9 +260,6 @@ export default function Tela1({navigation}) {
             <Text style={styles.input3}>Salvar Escala</Text>
           </TouchableOpacity>  
         </Animatable.View>
-        <TouchableOpacity style={styles.botaoLogoff} onPress={()=> navigation.navigate("SingIn")}>
-            <Text style={styles.input3}>Logoff</Text>
-          </TouchableOpacity>
       </Animatable.View>
     </View>
   );
