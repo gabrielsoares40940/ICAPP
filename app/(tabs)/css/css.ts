@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         marginTop:50,
-        marginLeft:100,
+        marginLeft:'27%',
         fontWeight: 'bold',
         fontFamily:'SpaceMono',
 
