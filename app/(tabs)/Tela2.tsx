@@ -310,6 +310,7 @@ export default function Tela2({navigation}) {
               {showPicker && (
                 <DateTimePicker
                   value={date}
+                  minimumDate={new Date()}
                   mode="date"
                   display="spinner"
                   onChange={onChange}
