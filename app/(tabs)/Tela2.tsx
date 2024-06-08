@@ -25,7 +25,6 @@ export default function Tela2({navigation}) {
   const [dia, setDia] = useState(''); 
   const [hora, setHora] = useState('');
   const [selectedAgendamentoId, setSelectedAgendamentoId] = useState(null);
-  const [dataAtual] = useState(new Date());
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [hora2, setHora2] = useState(new Date());
@@ -81,31 +80,30 @@ export default function Tela2({navigation}) {
   async function deleteItems(id){
     console.log('Meu', id)
     try {
-      //await deleteDoc(doc(FIRESTORE_DB, "123", id));
       Alert.alert(
-        'Deletar escala?', // Título do alerta
-        'Tem certeza de que quer deletar a escala?', // Mensagem do alerta
+        'Deletar escala?',
+        'Tem certeza de que quer deletar a escala?',
         [
           {
-            text: 'SIM', // Texto do botão
-            onPress: () => deleteDoc(doc(FIRESTORE_DB, "123", id)), // Ação ao pressionar o botão
+            text: 'SIM',
+            onPress: () => deleteDoc(doc(FIRESTORE_DB, "123", id)),
           },
           
           {
-            text: 'NÃO', // Texto do botão
-            onPress: () => fetchAgendamentos() // Ação ao pressionar o botão
+            text: 'NÃO',
+            onPress: () => fetchAgendamentos()
           },
           
         ],
-        {cancelable: false} // O alerta não pode ser cancelado ao tocar fora dele
+        {cancelable: false} 
       );
-      // Atualizar a lista após a deleção
       fetchAgendamentos();
     } catch (error) {
       console.error("Erro!", "Erro ao buscar escala: ", error);
     }
   }
 
+  // Função que gera o PDF
   const gerarPdf = async () => {
     const agendamentosFiltrados = agendamentos.filter(item => !item.hasOwnProperty('compareceu'));
     const listaHtml = agendamentosFiltrados.map(item => `
@@ -134,16 +132,19 @@ export default function Tela2({navigation}) {
     });
 
     setPdfUri(newFileName);
-    Alert.alert("Sucesso!", "PDF gerado com sucesso!");
+    Alert.alert("Sucesso!", "PDF gerado e pronto para ser compartilhado!",
+    [
+      {
+        text: 'COMPARTILHAR',
+        onPress: () => shareAsync(newFileName),
+      },
+    ],
+    {cancelable: false} 
+  )
+  fetchAgendamentos();
+    
   };
 
-  const compartilharPdf = async () => {
-    if (pdfUri) {
-      await shareAsync(pdfUri);
-    } else {
-      Alert.alert("Erro!", "Por favor, gere o PDF primeiro.");
-    }
-  };
 
   const getDayOfWeek = (dateString) => {
     const date = parse(dateString, 'dd/MM/yyyy', new Date(), { locale: ptBR });
@@ -246,14 +247,8 @@ export default function Tela2({navigation}) {
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <Text style={styles.titleAgendamento}>Escalas</Text>
-        <Feather name="arrow-left" style={{width:50, height:50, marginRight: 'auto', top:54, right:238}} color={'#56A9B6'} size={30} onPress={()=> navigation.navigate("SingIn")}/>
         <View style={{ marginTop: 50, marginLeft: 40 }}>
-          <TouchableOpacity style={{ backgroundColor: '#63c2d1', borderRadius: 10, padding: 10, width: 40, marginBottom: 10 }} onPress={gerarPdf}>
-            <AntDesign name='pdffile1' style={{ color: '#fff', fontSize: 20 }} />
-          </TouchableOpacity>
-          <TouchableOpacity style={{ backgroundColor: '#63c2d1', borderRadius: 10, padding: 10, width: 40 }} onPress={compartilharPdf} disabled={!pdfUri}>
-            <AntDesign name='sharealt' style={{ color: '#fff', fontSize: 20 }} />
-          </TouchableOpacity>
+          <AntDesign name='sharealt' style={{ color: '#fff', fontSize: 20,backgroundColor: '#63c2d1', borderRadius: 10, padding: 10, width: 40, marginBottom: 10, left:'28%'}} onPress={gerarPdf}/>
         </View>
       </View>
 
@@ -269,8 +264,8 @@ export default function Tela2({navigation}) {
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
                 <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent:"space-between", padding: 10 }}>
                     <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                    <Feather name="trash" style={{ width:20, height:20, marginLeft:'auto', bottom:45}} color={'gray'} size={20} onPress={() => deleteItems(agendamento.id)}/>
-                    <Feather name="edit" color={'gray'} size={20} style={{ position:'absolute' , width:20, height:20}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
+                    <Feather name="trash" style={{ width:20, height:20, position:'absolute', top:'auto'}} color={'gray'} size={20} onPress={() => deleteItems(agendamento.id)}/>
+                    <Feather name="edit" color={'gray'} size={20} style={{ left:'95%',bottom:'20%', width:20, height:20}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
                     <Card.Divider/>
                       <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
                       <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
