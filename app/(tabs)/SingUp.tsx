@@ -85,6 +85,9 @@ export default function SignUp() {
           >
           <Text style={styles.input3}>Cadastrar-se</Text>
         </TouchableOpacity>
+        <Text onPress={()=>navigation.navigate('SingIn' as never)} style={styles.texto}>
+            Já possui conta? Clique aqui para <Text style={styles.bold}>Logar-se!</Text>
+          </Text>
       </Animatable.View>
     </View>
   );
