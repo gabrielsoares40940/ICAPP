@@ -1,6 +1,6 @@
 // PAGINA DE Preload
 import React,{ useEffect } from 'react';
-import {View, Image, ActivityIndicator, Text} from 'react-native';
+import {View, Image, ActivityIndicator, Text, TouchableOpacity} from 'react-native';
 import {styles} from './css/css';
 import {useNavigation } from '@react-navigation/native';
 
@@ -46,6 +46,12 @@ export default function Home() {
             color='#63c2d1'
             animating={true}
           />
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={()=>navigation.navigate('SingIn' as never)}
+          >
+            <Text style={styles.input3}>Acessar</Text>
+          </TouchableOpacity>
         </View>
   );
 }

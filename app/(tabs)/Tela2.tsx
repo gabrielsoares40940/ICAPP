@@ -311,6 +311,7 @@ export default function Tela2({navigation}) {
                 <DateTimePicker
                   value={date}
                   minimumDate={new Date()}
+                  textColor="#808080"
                   mode="date"
                   display="spinner"
                   onChange={onChange}
