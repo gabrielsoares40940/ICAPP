@@ -108,15 +108,16 @@ export default function Tela2({navigation}) {
     const agendamentosFiltrados = agendamentos.filter(item => !item.hasOwnProperty('compareceu'));
     const listaHtml = agendamentosFiltrados.map(item => `
       <div>
-        <h3>Nome: ${item.nome}</h3>
+        <p>Nome: ${item.nome}</hp>
         <p>Dia: ${item.dia}</p>
         <p>Hora: ${item.hora}</p>
+        <p>------------------------------------</p>
       </div>
     `).join('');
 
     const html = `
       <html>
-        <body>
+        <body align="center">
           <h1>Segue a escala desta semana!</h1>
           ${listaHtml}
         </body>
