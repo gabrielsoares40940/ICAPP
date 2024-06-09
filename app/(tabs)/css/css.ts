@@ -71,7 +71,6 @@ export const styles = StyleSheet.create({
     },
     titleAgendamento2:{
         fontSize:30,
-        margin:30,
         color:'#56A9B6',
         alignItems:'center',
         justifyContent:'center',
@@ -115,6 +114,19 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         marginTop:50,
     },
+    button3:{
+        fontSize:16,
+        backgroundColor: '#56A9B6' ,
+        padding:10,
+        margin: 10,
+        marginBottom: 30,
+        borderRadius:10,
+        borderColor:'#fff',
+        justifyContent:'center',
+        marginTop:50,
+        width:'50%',
+        color:'#fff'
+    },
     inputArea:{
         flexDirection:'row',
         fontSize:16,
@@ -135,6 +147,13 @@ export const styles = StyleSheet.create({
         color:'#fff',
         alignItems:'center',
         justifyContent:'center'
+    },    
+    input4:{
+        fontSize:16,
+        color:'#fff',
+        alignItems:'center',
+        justifyContent:'center',
+        textAlign:'center'
     },
     icon:{
         width:'10%',
