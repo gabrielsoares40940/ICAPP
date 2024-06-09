@@ -39,11 +39,6 @@ export default function Home() {
           source={require('../(tabs)/assets/imaculada.png')}
           />
           <Text/>
-          <ActivityIndicator
-            size='large'
-            color='#63c2d1'
-            animating={true}
-          />
           <TouchableOpacity 
             style={styles.button}
             onPress={()=>navigation.navigate('SingIn' as never)}
