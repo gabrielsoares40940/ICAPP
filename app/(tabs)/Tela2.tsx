@@ -176,6 +176,9 @@ export default function Tela2({navigation}) {
   }, {});
 
   const diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  const capitalize = (word: string) => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  };
 
   // Substitua esta linha
   const agendamentosOrdenados = diasSemana
@@ -263,7 +266,9 @@ export default function Tela2({navigation}) {
       <View style={{ flexDirection: "row" }}>
         <Text style={styles.titleAgendamento}>Escalas</Text>
         <View style={{ marginTop: 50, marginLeft: 40 }}>
-          <AntDesign name='sharealt' style={{ color: '#fff', fontSize: 20,backgroundColor: '#63c2d1', borderRadius: 10, padding: 10, width: 40, marginBottom: 10, left:'28%'}} onPress={gerarPdf}/>
+          <TouchableOpacity onPress={gerarPdf}>
+            <Feather name='share-2' style={{ color: '#fff', fontSize: 20,backgroundColor: '#63c2d1', borderRadius: 10, padding: 10, width: 40, marginBottom: 10, left:'28%'}}/>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -274,7 +279,7 @@ export default function Tela2({navigation}) {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View key={item[0]}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{item[0]}</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{capitalize(item[0])}</Text>
             {item[1].map(agendamento => (
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
                 <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent:"space-between", padding: 10 }}>
@@ -301,11 +306,11 @@ export default function Tela2({navigation}) {
       />
 
     {modalVisible && (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.container}>
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={() => setModalVisible(false)}>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-            <View style={{ backgroundColor: 'white', padding: 50, borderRadius: 30, width: 390, height:500 }}>
-              <Feather name="x-square" color={'red'} size={30} style={{right: -300, top: -30}} onPress={() => setModalVisible(false)}/>
+            <View style={{ backgroundColor: 'white', padding: '10%', borderRadius: 30, width: '100%', height:'60%', alignItems:'center' }}>
+              <Feather name="x-square" color={'red'} size={30} style={{left: '50%', bottom:'5%'}} onPress={() => setModalVisible(false)}/>
               <Text style={{ fontSize: 25, marginBottom: 20, fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>EDITAR</Text>
               <TextInput
                 style={styles.input}
@@ -355,8 +360,8 @@ export default function Tela2({navigation}) {
               {showPickerHora && Platform.OS === 'ios' && (
                 <Button title="Confirmar" onPress={confirmIOSHora} />
               )}
-              <TouchableOpacity style={styles.button2} onPress={() => alterarEscala(selectedAgendamentoId)}>
-                <Text style={styles.input2}>Alterar escala</Text>
+              <TouchableOpacity style={styles.button3} onPress={() => alterarEscala(selectedAgendamentoId)}>
+                <Text style={styles.input4}>Alterar escala</Text>
               </TouchableOpacity>  
             </View>
           </View>
