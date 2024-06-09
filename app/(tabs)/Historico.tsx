@@ -28,7 +28,7 @@ export default function Historico({ navigation }: { navigation: any }) {
             })) as Agendamento[];
             setAgendamentos(agendamentosData);
         } catch (error) {
-            console.error("Erro ao buscar escalas: ", error);
+            console.error("Erro!", "Erro ao buscar escalas: ", error);
         }
     }
 
@@ -46,7 +46,6 @@ export default function Historico({ navigation }: { navigation: any }) {
         item.dia.includes(filterText))
     );
 
-    
 
     return (
         <View style={styles.container}>
@@ -70,7 +69,7 @@ export default function Historico({ navigation }: { navigation: any }) {
                 renderItem={({ item }) => (
                     <Animatable.View delay={50} animation="fadeInUp">
                         <Card containerStyle={{ width: 350, height: 210, borderRadius: 20 }}>
-                            <Card.Title>Escala</Card.Title>
+                            <Card.Title style={{fontSize:20}}>Escala</Card.Title>
                             {item.compareceu === 'Presente' ? (
                                 <Feather name="check" color={'green'} size={20} style={{ left: 300, top: -35 }} />
                             ) : (
