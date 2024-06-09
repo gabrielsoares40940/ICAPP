@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert , Platform, Pressable} from 'react-native';
 import {addDoc, collection } from "firebase/firestore";
-import { Feather } from "@expo/vector-icons";
 
 
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário

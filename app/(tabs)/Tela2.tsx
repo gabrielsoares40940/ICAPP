@@ -31,6 +31,22 @@ export default function Tela2({navigation}) {
   const [showPickerHora, setShowPickerHora] = useState(false);
 
   useEffect(() => {
+    const originalConsoleError = console.error;
+
+    console.error = (...args: any[]) => {
+      if (typeof args[0] === "string" && /defaultProps/.test(args[0])) {
+        return;
+      }
+
+      originalConsoleError(...args);
+    };
+
+    return () => {
+      console.error = originalConsoleError;
+    };
+  }, []);
+
+  useEffect(() => {
     fetchAgendamentos();
   }, []);
 
@@ -62,7 +78,6 @@ export default function Tela2({navigation}) {
   }
 
   async function alterarEscala(id) {
-    console.log(id)
     try {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
         nome: nome,
@@ -78,7 +93,6 @@ export default function Tela2({navigation}) {
   }
 
   async function deleteItems(id){
-    console.log('Meu', id)
     try {
       Alert.alert(
         'Deletar escala?',

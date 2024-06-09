@@ -10,6 +10,7 @@ import { FIREBASE_APP } from '../../firebaseConfig';
 import {Ionicons} from '@expo/vector-icons';
 
 import * as Animatable from 'react-native-animatable';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function SignUp() {
@@ -22,8 +23,8 @@ export default function SignUp() {
     if (email !== '' && password !== '') {
       try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
-        console.log('Deu bom, ' + response);
         Alert.alert('Bemvindo!', 'Conta criada com sucesso!');
+        await AsyncStorage.setItem('token', JSON.stringify(response.user));
         navigation.navigate('Logado' as never);
       } catch (error) {
         console.error('Deu ruim', error);

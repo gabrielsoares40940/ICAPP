@@ -18,9 +18,7 @@ export default function Home() {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
       if(token !== null){
-        
-        //validar token
-
+        navigation.navigate('Logado' as never)
       } else {
         navigation.navigate('SingIn' as never); //DEPOIS VER SE FUNCIONA
         

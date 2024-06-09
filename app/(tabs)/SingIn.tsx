@@ -8,6 +8,7 @@ import { styles } from './css/css';
 import {Ionicons} from '@expo/vector-icons';
 
 import * as Animatable from 'react-native-animatable';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ export default function SignIn() {
     if (email !== '' && password !== '') {
       try {
         const response = await signInWithEmailAndPassword(auth, email, password);
-        console.log("Deu bom", response);
+        await AsyncStorage.setItem('token', JSON.stringify(response.user));
         navigation.navigate('Logado' as never);
       } catch (e) {
         console.error("Deu ruim", e);
