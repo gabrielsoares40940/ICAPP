@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, FlatList, RefreshControl } from "react-native";
-import { getDocs, collection } from "firebase/firestore";
+import { View, Text, TextInput, FlatList, RefreshControl, Alert } from "react-native";
+import { getDocs, collection, doc, updateDoc, FieldValue, deleteField } from "firebase/firestore";
 import { Card } from "react-native-elements";
 import { FIRESTORE_DB } from "@/firebaseConfig";
 import * as Animatable from 'react-native-animatable';
 import { Feather } from "@expo/vector-icons";
 import { styles } from "./css/css";
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 interface Agendamento {
     id: string;
@@ -46,7 +47,34 @@ export default function Historico({ navigation }: { navigation: any }) {
         item.dia.includes(filterText))
     );
 
-    
+    async function removeField(id:string){
+        try{
+            const docRef = doc(FIRESTORE_DB, '123', id)
+            await updateDoc(docRef, {  
+                compareceu : deleteField()
+            })
+            fetchAgendamentos()
+        }
+        catch(e){
+            console.error("Algo deu errado :( ")
+        }
+    }
+
+    function undoPresence(id:string){
+        Alert.alert(
+            "Desfazer ação?",
+            'Deseja relamente desfazer a ação?',
+            [
+                {
+                    text: "SIM",
+                    onPress:() => removeField(id)
+                },
+                {
+                    text: "Não"
+                }
+            ]
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -71,6 +99,8 @@ export default function Historico({ navigation }: { navigation: any }) {
                     <Animatable.View delay={50} animation="fadeInUp">
                         <Card containerStyle={{ width: 350, height: 210, borderRadius: 20 }}>
                             <Card.Title>Escala</Card.Title>
+                            <EvilIcons name="undo" size={26} color="gray" style={{ width:20, height:20, position:'absolute', top:'auto'}} onPress={() => undoPresence(item.id)}/>
+                            {/* <Feather name="trash" style={{ width:20, height:20, position:'absolute', top:'auto'}} color={'gray'} size={20}  /> */}
                             {item.compareceu === 'Presente' ? (
                                 <Feather name="check" color={'green'} size={20} style={{ left: 300, top: -35 }} />
                             ) : (
