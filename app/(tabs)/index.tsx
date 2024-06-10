@@ -1,17 +1,14 @@
-// PAGINA DE Preload
+//ARQUIVO DE PRELOAD
+
 import React,{ useEffect } from 'react';
-import {View, Image, ActivityIndicator, Text, TouchableOpacity} from 'react-native';
-import {styles} from './css/css';
+import {View, Image, Text, TouchableOpacity} from 'react-native';
 import {useNavigation } from '@react-navigation/native';
 
-
-//import UserContextProvider from '../contexts/UserContext';
+import {styles} from './css/css';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 export default function Home() {
-
   const navigation = useNavigation();
 
   useEffect(()=>{
@@ -20,31 +17,18 @@ export default function Home() {
       if(token !== null){
         navigation.navigate('Logado' as never)
       } else {
-        navigation.navigate('SingIn' as never); //DEPOIS VER SE FUNCIONA
-        
+        navigation.navigate('SingIn' as never);
       }
-
     }
     checkToken();
   },[]);
 
-
-// colocar UserContextProvider
-
   return (
-        <View style={styles.container}>
-          
-          <Image
-          style={styles.img}
-          source={require('../(tabs)/assets/imaculada.png')}
-          />
-          <Text/>
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={()=>navigation.navigate('SingIn' as never)}
-          >
-            <Text style={styles.input3}>Acessar</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={styles.container}>
+      <Image style={styles.img} source={require('../(tabs)/assets/imaculada.png')}/>
+      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('SingIn' as never)}>
+        <Text style={styles.input3}>Acessar</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
