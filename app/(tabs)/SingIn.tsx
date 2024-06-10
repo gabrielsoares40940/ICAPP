@@ -1,13 +1,15 @@
+//ARQUIVO DA TELA DE LOGIN
+
 import { View, Image, TextInput, TouchableOpacity, Alert, Text, KeyboardAvoidingView,StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { FIREBASE_APP } from '@/firebaseConfig';
+import * as Animatable from 'react-native-animatable';
 import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { styles } from './css/css';
-
 import {Ionicons} from '@expo/vector-icons';
 
-import * as Animatable from 'react-native-animatable';
+import { styles } from './css/css';
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_APP } from '@/firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn() {
@@ -16,6 +18,7 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const auth = getAuth(FIREBASE_APP);
 
+  //Validar login
   async function validateLogin() {
     if (email !== '' && password !== '') {
       try {
@@ -24,7 +27,7 @@ export default function SignIn() {
         navigation.navigate('Logado' as never);
       } catch (e) {
         console.error("Deu ruim", e);
-        Alert.alert("Erro", "E-mail ou senha incorretos.");
+        Alert.alert("Erro!", "E-mail ou senha incorretos.");
       }
     } else {
       Alert.alert("Erro!","Preencha os campos de e-mail e senha.");
@@ -45,14 +48,14 @@ export default function SignIn() {
       <Animatable.View delay={1000} animation="fadeInUp" style={styles.container2}>
         <KeyboardAvoidingView behavior='position' enabled>
           <View style={styles.inputArea}>
-          <Ionicons name="mail" color="#fff" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
-          <TextInput
-            placeholderTextColor="#fff"
-            placeholder='Digite seu e-mail'
-            style={styles.input2}
-            onChangeText={text => setEmail(text)}
-            value={email}
-          />
+            <Ionicons name="mail" color="#fff" size={22} style={{ paddingTop:3,marginRight:5,justifyContent:'center',alignItems:'center'}}/>
+            <TextInput
+              placeholderTextColor="#fff"
+              placeholder='Digite seu e-mail'
+              style={styles.input2}
+              onChangeText={text => setEmail(text)}
+              value={email}
+            />
           </View>
           <View style={styles.inputArea}>
             <Ionicons name="lock-closed" color="#fff" size={22} style={styles.iconLock}/>
@@ -73,11 +76,8 @@ export default function SignIn() {
             </TouchableOpacity>
           </View>
           </KeyboardAvoidingView>
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={validateLogin}
-          >
-            <Text style={styles.input3}>Logar-se</Text>
+          <TouchableOpacity style={styles.button} onPress={validateLogin}>
+            <Text style={styles.input3}>Login</Text>
           </TouchableOpacity>
           <Text onPress={()=>navigation.navigate('SingUp' as never)} style={styles.texto}>
             Não possui conta? Clique aqui para <Text style={styles.bold}>Cadastrar-se!</Text>
