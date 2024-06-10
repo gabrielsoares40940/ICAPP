@@ -1,3 +1,5 @@
+//ARQUIVO DA CRIAÇÃO DE ESCALAS
+
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert , Platform, Pressable} from 'react-native';
 import {addDoc, collection } from "firebase/firestore";
@@ -17,21 +19,15 @@ export default function Tela1({navigation}) {
   const [hora, setHora] = useState('');
     
   async function handleCreateAppointment() {
+    //Criando variáveis
     if (nome !== '' && dia !== '' && hora !== '') {
       try {
-        
-        //const docRef = doc(FIRESTORE_DB, "appointments");
         const docRef = await addDoc(collection(FIRESTORE_DB, "123"), {
-            nome,
-            dia,
-            hora,
-            createdAt: new Date()
-          });
-        // addDoc(colRef, {
-        //     title,
-        //     description,
-        //     createdAt: new Date()
-        // });
+          nome,
+          dia,
+          hora,
+          createdAt: new Date()
+        });
         
         Alert.alert("Sucesso!", "Escala criada com sucesso!");
 
@@ -46,7 +42,6 @@ export default function Tela1({navigation}) {
       Alert.alert("Erro!", "Por favor, preencha todos os campos.");
     }
   }
-
 
   //Trabalhando com datas!
   const [dataAtual] = useState(new Date()); //Criado para barrar as datas anteriores
@@ -79,6 +74,7 @@ export default function Tela1({navigation}) {
     toggleDatePicker();
   }
 
+  //Formatar data
   const formatDate = (rawDate)=>{
     let date = new Date(rawDate);
 
@@ -92,7 +88,7 @@ export default function Tela1({navigation}) {
     return `${day}/${month}/${year}`;
   }
 
- // Trabalhando com Horas
+  //Trabalhando com Horas
   const [hora2,setHora2] = useState(new Date());
   const [showPickerHora, setShowPickerHora] = useState(false);
 
@@ -121,6 +117,7 @@ export default function Tela1({navigation}) {
     toggleHoraPicker();
   }
 
+  //Formatar hora
   const formatHora = (rawDate)=>{
     let hora2 = new Date(rawDate);
 
@@ -132,8 +129,6 @@ export default function Tela1({navigation}) {
     
     return `${Hora}:${Minutos}`;
   }
-
-
   
   return (
     <View style={styles.container}>
@@ -152,38 +147,32 @@ export default function Tela1({navigation}) {
         <Animatable.View delay={150} animation="fadeInUp" style={{alignItems:"center",justifyContent:"center", width:320}}>
           {showPicker && (
           <DateTimePicker 
-          timeZoneName="America/Fortaleza"
-          value={date}
-          mode={'date'}
-          is24Hour={true}
-          display='default'
-          minimumDate={dataAtual}
-          onChange={onChange}
-          style={styles.datePicker}
-          locale='pt-BR'
-          
+            timeZoneName="America/Fortaleza"
+            value={date}
+            mode={'date'}
+            is24Hour={true}
+            display='default'
+            minimumDate={dataAtual}
+            onChange={onChange}
+            style={styles.datePicker}
+            locale='pt-BR'
           />   
           )} 
 
           {showPicker && Platform.OS==="ios" &&(
-            <View
-                style={{flexDirection:"row", justifyContent:"space-around"}}>
-                  <TouchableOpacity 
-                  style={[styles.pickerButton,{backgroundColor:"#ec5353",borderRadius:20,margin:10,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                  onPress={toggleDatePicker}
-                  >
-                      <Text
-                      style={[styles.buttonText,{color:"#fff"}]}
-                      >Cancelar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    style={[styles.pickerButton,{backgroundColor:"#4169e1",borderRadius:20,margin:10,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                  onPress={confirmIOSDate}
-                    >
-                      <Text
-                      style={[styles.buttonText,{color:"#fff"}]}
-                      >Confirmar</Text>
-                  </TouchableOpacity>
+            <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+              <TouchableOpacity 
+                style={[styles.pickerButton,{backgroundColor:"#ec5353",borderRadius:20,margin:10,justifyContent:"center",alignItems:'center',width:"50%"}]}
+                onPress={toggleDatePicker}
+              >
+              <Text style={[styles.buttonText,{color:"#fff"}]}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.pickerButton,{backgroundColor:"#4169e1",borderRadius:20,margin:10,justifyContent:"center",alignItems:'center',width:"50%"}]}
+                onPress={confirmIOSDate}
+              >
+              <Text style={[styles.buttonText,{color:"#fff"}]}>Confirmar</Text>
+              </TouchableOpacity>
             </View>
           )}
 
@@ -197,45 +186,40 @@ export default function Tela1({navigation}) {
                 onChangeText={setDia}
                 editable={false}
                 onPressIn={toggleDatePicker}
-                />
+              />
             </Pressable>
           )}
-        </Animatable.View>
-        <Animatable.View delay={200} animation="fadeInUp" style={{alignItems:"center",justifyContent:"center", width:320}}>
+          </Animatable.View>
+          <Animatable.View delay={200} animation="fadeInUp" style={{alignItems:"center",justifyContent:"center", width:320}}>
           {/*  Trabalhando com Horas  */}
-        {showPickerHora && (
-          <DateTimePicker 
-          timeZoneName="America/Fortaleza"
-          value={hora2}
-          mode={'time'}
-          is24Hour={false}
-          display='spinner'
-          minimumDate={new Date()}
-          onChange={onChangeHora}
-          style={styles.datePicker}
-          locale='pt-BR'
-          />   
+          {showPickerHora && (
+            <DateTimePicker 
+            timeZoneName="America/Fortaleza"
+            value={hora2}
+            mode={'time'}
+            is24Hour={false}
+            display='spinner'
+            minimumDate={new Date()}
+            onChange={onChangeHora}
+            style={styles.datePicker}
+            locale='pt-BR'
+            />   
           )} 
 
           {showPickerHora && Platform.OS==="ios" &&(
-            <View
-                style={{flexDirection:"row", justifyContent:"space-around" }}>
-                  <TouchableOpacity 
-                  style={[styles.pickerButton,{backgroundColor:"#ec5353",borderRadius:20,margin:5,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                  onPress={toggleHoraPicker}
-                  >
-                      <Text
-                      style={[styles.buttonText,{color:"#fff"}]}
-                      >Cancelar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                  style={[styles.pickerButton,{backgroundColor:"#4169e1",borderRadius:20,margin:5,justifyContent:"center",alignItems:'center',width:"50%"}]}
-                  onPress={confirmIOSHora}
-                    >
-                      <Text
-                      style={[styles.buttonText,{color:"#fff"}]}
-                      >Confirmar</Text>
-                  </TouchableOpacity>
+            <View style={{flexDirection:"row", justifyContent:"space-around" }}>
+              <TouchableOpacity 
+                style={[styles.pickerButton,{backgroundColor:"#ec5353",borderRadius:20,margin:5,justifyContent:"center",alignItems:'center',width:"50%"}]}
+                onPress={toggleHoraPicker}
+              >
+              <Text style={[styles.buttonText,{color:"#fff"}]}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.pickerButton,{backgroundColor:"#4169e1",borderRadius:20,margin:5,justifyContent:"center",alignItems:'center',width:"50%"}]}
+                onPress={confirmIOSHora}
+              >
+              <Text style={[styles.buttonText,{color:"#fff"}]}>Confirmar</Text>
+              </TouchableOpacity>
             </View>
           )}
 
@@ -249,7 +233,7 @@ export default function Tela1({navigation}) {
                 onChangeText={setHora}
                 editable={false}
                 onPressIn={toggleHoraPicker}
-                />
+              />
             </Pressable>
           )}
           </Animatable.View>
