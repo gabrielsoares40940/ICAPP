@@ -1,21 +1,21 @@
+//ARQUIVO DA TELA DAS ESCALAS
+
 import { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity, Button, Alert, RefreshControl, Modal, TextInput, Platform, Pressable } from 'react-native';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from '@firebase/firestore';
-import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
-import { styles } from './css/css';
 import { Card } from 'react-native-elements';
 import { Feather } from "@expo/vector-icons";
-
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
-
 import * as Animatable from 'react-native-animatable';
-
-import { AntDesign } from '@expo/vector-icons';
 import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; // Para o formato de data em português
+
+import { styles } from './css/css';
+
+import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
+import { collection, getDocs, doc, updateDoc, deleteDoc } from '@firebase/firestore';
 
 export default function Tela2({navigation}) {
   const [agendamentos, setAgendamentos] = useState([]);
@@ -37,8 +37,7 @@ export default function Tela2({navigation}) {
       if (typeof args[0] === "string" && /defaultProps/.test(args[0])) {
         return;
       }
-
-      originalConsoleError(...args);
+    originalConsoleError(...args);
     };
 
     return () => {
@@ -50,6 +49,7 @@ export default function Tela2({navigation}) {
     fetchAgendamentos();
   }, []);
 
+  //Atualizar escalas puxando do firebase
   async function fetchAgendamentos() {
     try {
       const querySnapshot = await getDocs(collection(FIRESTORE_DB, "123"));
@@ -64,6 +64,7 @@ export default function Tela2({navigation}) {
     }
   }
 
+  //Atualiza se o coroinha está presente ou ausente
   async function presenteAusente(id, situation) {
     try {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
@@ -77,6 +78,7 @@ export default function Tela2({navigation}) {
     }
   }
 
+  //Editar escala
   async function alterarEscala(id) {
     try {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
@@ -92,6 +94,7 @@ export default function Tela2({navigation}) {
     }
   }
 
+  //Deletar escala
   async function deleteItems(id){
     try {
       Alert.alert(
@@ -117,7 +120,7 @@ export default function Tela2({navigation}) {
     }
   }
 
-  // Função que gera o PDF
+  //Função que gera e compartilha o PDF com a escala
   const gerarPdf = async () => {
     const agendamentosFiltrados = agendamentos.filter(item => !item.hasOwnProperty('compareceu'));
     const listaHtml = agendamentosFiltrados.map(item => `
@@ -157,15 +160,15 @@ export default function Tela2({navigation}) {
     {cancelable: false} 
   )
   fetchAgendamentos();
-    
   };
 
-
+  //Pegar os dias da semana
   const getDayOfWeek = (dateString) => {
     const date = parse(dateString, 'dd/MM/yyyy', new Date(), { locale: ptBR });
     return format(date, 'EEEE', { locale: ptBR });
   };
 
+  //Agrupar as escalas pelo dia da semana
   const agendamentosAgrupados = agendamentos.reduce((acc, agendamento) => {
     const dayOfWeek = getDayOfWeek(agendamento.dia);
     if (!acc[dayOfWeek]) {
@@ -180,7 +183,6 @@ export default function Tela2({navigation}) {
     return word.charAt(0).toUpperCase() + word.slice(1)
   };
 
-  // Substitua esta linha
   const agendamentosOrdenados = diasSemana
     .map(dia => [dia, agendamentosAgrupados[dia] || []])
     .filter(([dia, agendamentos]) => agendamentos.length > 0); // Filtra apenas os dias com agendamentos
@@ -189,6 +191,7 @@ export default function Tela2({navigation}) {
     setShowPicker(!showPicker);
   };
 
+  //Edita a data
   const onChange = (event, selectedDate) => {
     if (event.type === "set" && selectedDate) {
       const currentDate = selectedDate || date;
@@ -207,6 +210,7 @@ export default function Tela2({navigation}) {
     toggleDatePicker();
   }
 
+  //Formata a data
   const formatDate = (rawDate) => {
     let date = new Date(rawDate);
     let year = date.getFullYear();
@@ -223,6 +227,7 @@ export default function Tela2({navigation}) {
     setShowPickerHora(!showPickerHora);
   };
 
+  //Edita a hora
   const onChangeHora = (event, selectedHora) => {
     if (event.type === "set" && selectedHora) {
       const currentHora = selectedHora || hora2;
@@ -241,6 +246,7 @@ export default function Tela2({navigation}) {
     toggleHoraPicker();
   }
 
+  //Formata a hora
   const formatHora = (rawDate) => {
     let hora2 = new Date(rawDate);
 
@@ -253,6 +259,7 @@ export default function Tela2({navigation}) {
     return `${Hora}:${Minutos}`;
   }
 
+  //Abrir modal de edição da escala
   const openModal = (id, nome, dia, hora) => {
     setSelectedAgendamentoId(id);
     setNome(nome);
@@ -271,9 +278,9 @@ export default function Tela2({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-
       <Text style={styles.PuxeAtualizar}>Arraste para atualizar</Text>
-      <FlatList style={{marginBottom:50}}
+      <FlatList 
+        style={{marginBottom:50}}
         refreshControl={<RefreshControl refreshing={false} onRefresh={fetchAgendamentos} />}
         data={agendamentosOrdenados}
         keyExtractor={(item, index) => index.toString()}
@@ -283,21 +290,21 @@ export default function Tela2({navigation}) {
             {item[1].map(agendamento => (
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
                 <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent:"space-between", padding: 10 }}>
-                    <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                    <Feather name="trash" style={{ width:20, height:20, position:'absolute', top:'auto'}} color={'gray'} size={20} onPress={() => deleteItems(agendamento.id)}/>
-                    <Feather name="edit" color={'gray'} size={20} style={{ left:'95%',bottom:'20%', width:20, height:20}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
-                    <Card.Divider/>
-                      <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
-                      <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
-                      <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
-                      <View style={styles.AreaCompareceu}>
-                        <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "Ausente")}>
-                          <Text style={styles.TextoExcluir}>Não compareceu</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(agendamento.id, "Presente")}>
-                          <Text style={styles.TextoCompareceu}>Compareceu</Text>
-                        </TouchableOpacity>
-                      </View>
+                  <Card.Title style={{fontSize:20}}>Escala</Card.Title>
+                  <Feather name="trash" style={{ width:20, height:20, position:'absolute', top:'auto'}} color={'gray'} size={20} onPress={() => deleteItems(agendamento.id)}/>
+                  <Feather name="edit" color={'gray'} size={20} style={{ left:'95%',bottom:'20%', width:20, height:20}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
+                  <Card.Divider/>
+                    <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
+                    <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
+                    <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
+                    <View style={styles.AreaCompareceu}>
+                      <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "Ausente")}>
+                        <Text style={styles.TextoExcluir}>Não compareceu</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.botaoCompareceu} onPress={() => presenteAusente(agendamento.id, "Presente")}>
+                        <Text style={styles.TextoCompareceu}>Compareceu</Text>
+                      </TouchableOpacity>
+                    </View>
                 </Card>
               </Animatable.View>
             ))}
