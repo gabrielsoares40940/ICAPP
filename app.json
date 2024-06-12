@@ -17,9 +17,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splash.png",
+        "foregroundImage": "./assets/images/imaculada-icon.jpeg",
         "backgroundColor": "#63c2d1"
-      }
+      },
+      "package": "com.gabriel.soares.br.ICAPP"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "1c31743a-1237-4a28-939c-a70612be3683"
+      }
     }
   }
 }
