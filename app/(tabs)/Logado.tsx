@@ -36,7 +36,7 @@ export default function Logado() {
         component={Tela2} 
         options={{ 
           tabBarIcon:({size, color}) => <Feather name='list' color={color} size={size} />,
-            tabBarBadge: "!" ,
+            //tabBarBadge: "!" ,
             headerShown: false,
             tabBarActiveTintColor:"#fff",
             tabBarInactiveTintColor:"#808080",
