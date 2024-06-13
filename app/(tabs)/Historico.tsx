@@ -105,21 +105,22 @@ export default function Historico({ navigation }: { navigation: any }) {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Animatable.View delay={50} animation="fadeInUp">
-              <Card containerStyle={{ width: 350, height: 210, borderRadius: 20 }}>
-                <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                <EvilIcons name="undo" size={26} color="gray" style={{ width:20, height:20, position:'absolute', top:'auto'}} onPress={() => undoPresence(item.id)}/>
-                {item.compareceu === 'Presente' ? (
-                    <Feather name="check" color={'green'} size={20} style={{ left: 300, top: -35 }} />
-                ) : (
-                    <Feather name="x" color={'red'} size={20} style={{ left: 300, top: -35 }} />
-                )}
+              <Card containerStyle={{ width: 350, height: 160, borderRadius: 20 }}>
+                <Card.Title style={{fontSize:20}}>{item.nome}</Card.Title> 
+                {/*<Card.Title style={{fontSize:20}}>Escalas</Card.Title> */}
+                <EvilIcons name="undo" size={26} color="gray" style={{width:20, height:20, position:'absolute', top:'auto'}} onPress={() => undoPresence(item.id)}/>
                 <Card.Divider />
-                <Text style={{ color: 'black', textAlign: "center" }}>Nome: {item.nome}</Text>
+                {/*<Text style={{ color: 'black', textAlign: "center" }}>Nome: {item.nome}</Text>*/}
                 <Text style={{ color: 'black', textAlign: "center" }}>Dia: {item.dia}</Text>
                 <Text style={{ color: 'black', textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
-                <Card.Divider />
-                <Text style={{ color: getCardColor(item.compareceu), textAlign: "center", paddingBottom: 10 }} >
-                    {item.compareceu}
+                <Text style={{ color: getCardColor(item.compareceu), textAlign: "center", paddingBottom: 10, fontSize:15 }} >
+                {item.compareceu === 'Presente' ? (
+                  <Feather name="check" color={'green'} size={20} style={{ width:20, height:20 }} />
+                ) : (
+                    <Feather name="x" color={'red'} size={20} style={{ width:20, height:20 }} />
+                )}
+                {item.compareceu}
+
                 </Text>
               </Card>
             </Animatable.View>
