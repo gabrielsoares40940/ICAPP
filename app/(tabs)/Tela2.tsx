@@ -290,11 +290,11 @@ export default function Tela2({navigation}) {
             {item[1].map(agendamento => (
               <Animatable.View key={agendamento.id} delay={50} animation="fadeInUp">
                 <Card containerStyle={{ width: 350, borderRadius: 20, justifyContent:"space-between", padding: 10 }}>
-                  <Card.Title style={{fontSize:20}}>Escala</Card.Title>
-                  <Feather name="trash" style={{ width:20, height:20, position:'absolute', top:'auto'}} color={'gray'} size={20} onPress={() => deleteItems(agendamento.id)}/>
-                  <Feather name="edit" color={'gray'} size={20} style={{ left:'95%',bottom:'20%', width:20, height:20}} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
+                  <Feather name="trash" color={'gray'} size={20} style={{ width:20, height:20, position:'absolute', top:'auto'}} onPress={() => deleteItems(agendamento.id)}/>
+                  <Feather name="edit" color={'gray'} size={20} style={{ width:20, height:20, left:'95%' }} onPress={() => openModal(agendamento.id, agendamento.nome, agendamento.dia, agendamento.hora)}/>
+                  <Card.Title style={{fontSize:20}}>{agendamento.nome}</Card.Title>
                   <Card.Divider/>
-                    <Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>
+                    {/*<Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>*/}
                     <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
                     <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
                     <View style={styles.AreaCompareceu}>
