@@ -43,7 +43,7 @@ export default function SignUp() {
     <View style={styles.container}>
       <StatusBar backgroundColor='#63c2d1' barStyle='light-content'/>
       <Text style={styles.titleApp}>ICAPP</Text>
-      <Text style={styles.titleApp2}>Imaculada Conceição APP</Text>
+      {/*<Text style={styles.titleApp2}>Imaculada Conceição APP</Text>*/}
       <Image
         style={styles.imgMenor}
         source={require('../(tabs)/assets/imaculada.png')}
