@@ -2,7 +2,7 @@
   "expo": {
     "name": "ICAPP",
     "slug": "ICAPP",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/imaculada-icon.jpeg",
     "scheme": "myapp",
