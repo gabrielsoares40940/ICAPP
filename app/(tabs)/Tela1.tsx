@@ -1,9 +1,9 @@
 //ARQUIVO DA CRIAÇÃO DE ESCALAS
 
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert , Platform, Pressable} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert , Platform, Pressable, Button} from 'react-native';
 import {addDoc, collection } from "firebase/firestore";
-
+import RNPickerSelect from 'react-native-picker-select';
 
 import { FIRESTORE_DB } from '../../firebaseConfig'; // Ajuste o caminho conforme necessário
 import { styles } from './css/css';
@@ -17,15 +17,17 @@ export default function Tela1({navigation}) {
   const [nome, setNome] = useState('');
   const [dia, setDia] = useState(''); 
   const [hora, setHora] = useState('');
+  const [funcao, setFuncao] = useState('');
     
   async function handleCreateAppointment() {
     //Criando variáveis
-    if (nome !== '' && dia !== '' && hora !== '') {
+    if (nome !== '' && dia !== '' && hora !== '' && funcao !== '') {
       try {
         const docRef = await addDoc(collection(FIRESTORE_DB, "123"), {
           nome,
           dia,
           hora,
+          funcao,
           createdAt: new Date()
         });
         
@@ -34,6 +36,7 @@ export default function Tela1({navigation}) {
         setNome('');
         setDia('');
         setHora('');
+        setFuncao('');
         } catch (error) {
         console.error("Erro ao adicionar documento: ", error);
         Alert.alert("Erro!", "Não foi possível criar a escala.");
@@ -129,7 +132,13 @@ export default function Tela1({navigation}) {
     
     return `${Hora}:${Minutos}`;
   }
-  
+
+  const [showFuncao, setShowFuncao] =useState(false)
+
+  const toggleFuncao = () =>{
+    setShowFuncao(!showFuncao)
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleAgendamento2}>Criar Escala</Text>
@@ -197,12 +206,14 @@ export default function Tela1({navigation}) {
             timeZoneName="America/Fortaleza"
             value={hora2}
             mode={'time'}
-            is24Hour={false}
+            is24Hour={true}
             display='spinner'
             minimumDate={new Date()}
             onChange={onChangeHora}
             style={styles.datePicker}
             locale='pt-BR'
+            minuteInterval={30}
+
             />   
           )} 
 
@@ -226,7 +237,7 @@ export default function Tela1({navigation}) {
           {!showPickerHora && (
             <Pressable onPress={toggleHoraPicker}>
               <TextInput
-                placeholderTextColor="#fff"      
+                placeholderTextColor="#fff"
                 style={styles.input}
                 placeholder="Horário"
                 value={hora}
@@ -237,11 +248,28 @@ export default function Tela1({navigation}) {
             </Pressable>
           )}
           </Animatable.View>
+          {!showFuncao && (
+            <RNPickerSelect
+            onValueChange={(value) => setFuncao(value)}
+            items={[
+              { label: 'Turíbulo', value: 'Turíbulo' },
+              { label: 'Naveta', value: 'Naveta' },
+              { label: 'Livre', value: 'Livre' },
+            ]}
+            placeholder={{
+              label: 'Selecione uma função...',
+              value: null,
+              color: '#9EA0A4',
+            }}
+          />
+          )}
+          
           <Animatable.View delay={250} animation="fadeInUp" style={styles.container2}>
           <TouchableOpacity style={styles.button2} onPress={handleCreateAppointment}>
             <Text style={styles.input3}>Salvar Escala</Text>
           </TouchableOpacity>  
-        </Animatable.View>
+      {/* BOTÃO PARA VOLTAR <Button title="oi" onPress={() => navigation.goBack()} />*/}
+      </Animatable.View>
       </Animatable.View>
     </View>
   );
