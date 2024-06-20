@@ -17,6 +17,7 @@ interface Agendamento {
   nome: string;
   dia: string;
   hora: string;
+  funcao: string;
   compareceu: string;
 }
 
@@ -105,14 +106,15 @@ export default function Historico({ navigation }: { navigation: any }) {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Animatable.View delay={50} animation="fadeInUp">
-              <Card containerStyle={{ width: 350, height: 160, borderRadius: 20 }}>
+              <Card containerStyle={{ width: 350, height: 180, borderRadius: 20 }}>
                 <Card.Title style={{fontSize:20}}>{item.nome}</Card.Title> 
                 {/*<Card.Title style={{fontSize:20}}>Escalas</Card.Title> */}
-                <EvilIcons name="undo" size={26} color="gray" style={{width:20, height:20, position:'absolute', top:'auto'}} onPress={() => undoPresence(item.id)}/>
+                <Feather name="rotate-ccw" size={20} color="gray" style={{width:20, height:20, position:'absolute', top:'auto'}} onPress={() => undoPresence(item.id)}/>
                 <Card.Divider />
                 {/*<Text style={{ color: 'black', textAlign: "center" }}>Nome: {item.nome}</Text>*/}
                 <Text style={{ color: 'black', textAlign: "center" }}>Dia: {item.dia}</Text>
-                <Text style={{ color: 'black', textAlign: "center", paddingBottom: 10 }}>Hora: {item.hora}</Text>
+                <Text style={{ color: 'black', textAlign: "center" }}>Hora: {item.hora}</Text>
+                <Text style={{ textAlign: "center", paddingBottom: 10 }}>Função: {item.funcao}</Text>
                 <Text style={{ color: getCardColor(item.compareceu), textAlign: "center", paddingBottom: 10, fontSize:15 }} >
                 {item.compareceu === 'Presente' ? (
                   <Feather name="check" color={'green'} size={20} style={{ width:20, height:20 }} />
