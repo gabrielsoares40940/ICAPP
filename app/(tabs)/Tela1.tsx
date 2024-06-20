@@ -135,10 +135,6 @@ export default function Tela1({navigation}) {
 
   const [showFuncao, setShowFuncao] =useState(false)
 
-  const toggleFuncao = () =>{
-    setShowFuncao(!showFuncao)
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.titleAgendamento2}>Criar Escala</Text>
@@ -248,6 +244,7 @@ export default function Tela1({navigation}) {
             </Pressable>
           )}
           </Animatable.View>
+
           {!showFuncao && (
             <RNPickerSelect
             onValueChange={(value) => setFuncao(value)}
