@@ -131,6 +131,7 @@ export default function Tela2({navigation}) {
         <p>Nome: ${item.nome}</hp>
         <p>Dia: ${item.dia}</p>
         <p>Hora: ${item.hora}</p>
+        <p>Hora: ${item.funcao}</p>
         <p>------------------------------------</p>
       </div>
     `).join('');
