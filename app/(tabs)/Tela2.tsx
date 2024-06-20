@@ -11,6 +11,7 @@ import * as FileSystem from 'expo-file-system';
 import * as Animatable from 'react-native-animatable';
 import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale'; // Para o formato de data em português
+import RNPickerSelect from 'react-native-picker-select';
 
 import { styles } from './css/css';
 
@@ -29,6 +30,7 @@ export default function Tela2({navigation}) {
   const [showPicker, setShowPicker] = useState(false);
   const [hora2, setHora2] = useState(new Date());
   const [showPickerHora, setShowPickerHora] = useState(false);
+  const [funcao, setFuncao] = useState('');
 
   useEffect(() => {
     const originalConsoleError = console.error;
@@ -84,7 +86,8 @@ export default function Tela2({navigation}) {
       await updateDoc(doc(FIRESTORE_DB, "123", id), {
         nome: nome,
         dia: dia,
-        hora: hora
+        hora: hora,
+        funcao: funcao
       });
       Alert.alert("Sucesso!", "Escala atualizada!");
       fetchAgendamentos();
@@ -296,7 +299,8 @@ export default function Tela2({navigation}) {
                   <Card.Divider/>
                     {/*<Text style={{ textAlign: "center" }}>Nome: {agendamento.nome}</Text>*/}
                     <Text style={{ textAlign: "center" }}>Dia: {agendamento.dia}</Text>
-                    <Text style={{ textAlign: "center", paddingBottom: 10 }}>Hora: {agendamento.hora}</Text>
+                    <Text style={{ textAlign: "center" }}>Hora: {agendamento.hora}</Text>
+                    <Text style={{ textAlign: "center", paddingBottom: 10 }}>Função: {agendamento.funcao}</Text>
                     <View style={styles.AreaCompareceu}>
                       <TouchableOpacity style={styles.botaoExcluir} onPress={() => presenteAusente(agendamento.id, "Ausente")}>
                         <Text style={styles.TextoExcluir}>Não compareceu</Text>
@@ -362,11 +366,31 @@ export default function Tela2({navigation}) {
                   mode="time"
                   display="spinner"
                   onChange={onChangeHora}
+                  minuteInterval={30}
                 />
               )}
               {showPickerHora && Platform.OS === 'ios' && (
                 <Button title="Confirmar" onPress={confirmIOSHora} />
               )}
+              <RNPickerSelect
+                onValueChange={(value) => setFuncao(value)}
+                items={[
+                  { label: 'Turíbulo', value: 'Turíbulo' },
+                  { label: 'Naveta', value: 'Naveta' },
+                  { label: 'Livre', value: 'Livre' },
+                ]}
+                style={{
+                  inputAndroid: {
+                    fontSize: 16,
+                    paddingHorizontal: 10,
+                    paddingVertical: 8,
+                    borderWidth: 0.5,
+                    borderColor: 'purple',
+                    borderRadius: 8,
+                    color: 'black',
+                    paddingRight: 30, // to ensure the text is never behind the icon
+                },}}
+              />
               <TouchableOpacity style={styles.button3} onPress={() => alterarEscala(selectedAgendamentoId)}>
                 <Text style={styles.input4}>Alterar escala</Text>
               </TouchableOpacity>  
